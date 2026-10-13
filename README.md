@@ -47,11 +47,11 @@ Khác với các slide PowerPoint truyền thống, dự án áp dụng các cô
 | **01** | **Trang Bìa Chính Thức** | Tiêu đề chuyên đề Phần III, trích dẫn tư tưởng Hiến pháp 2013, 2 trụ cột QĐND & CAND và đối tượng học sinh. |
 | **02** | **Khái Quát Hai Nhóm Trách Nhiệm** | Phân định rõ 2 trụ cột: (1) Trách nhiệm pháp lý của Công dân (từ 18 tuổi) & (2) Trách nhiệm rèn luyện của Học sinh. |
 | **03** | **Công Dân: Đăng Ký Nghĩa Vụ Đúng Hạn** | Đăng ký lần đầu (17 tuổi), thủ tục chuyển đăng ký khi thay đổi nơi cư trú/học tập (>3 tháng), thủ tục tạm hoãn sinh viên. |
-| **04** | **Công Dân: Khám Tuyển & Nhập Ngũ** | Chấp hành nghiêm lệnh gọi khám sức khỏe, có mặt đúng hẹn lệnh nhập ngũ (24 tháng); **Tích hợp video phóng sự VTV1: Ngày hội tòng quân toàn quốc**. |
+| **04** | **Công Dân: Khám Tuyển & Nhập Ngũ** | Chấp hành nghiêm lệnh gọi khám sức khỏe, có mặt đúng hẹn lệnh nhập ngũ (24 tháng); **Tích hợp video phóng sự VTV1: Ngày hội tòng quân toàn quốc (Trích đoạn rút gọn 45s)**. |
 | **05** | **Công Dân: Tuyên Truyền & Vận Động** | Vận động gia đình làm hậu phương vững chắc; lan tỏa tấm gương tích cực đến bạn bè; phổ biến chế độ chính sách ưu đãi của Đảng & Nhà nước. |
-| **06** | **Công Dân: Đấu Tranh Chống Tiêu Cực** | Nhận diện tâm lý ngại khó ngại khổ; đấu tranh chống trốn tránh; **Tích hợp video phóng sự ANTV: Xét xử nghiêm minh theo Điều 332 BLHS (phạt tù đến 5 năm)**. |
-| **07** | **Học Sinh: Ý Thức & Môn GDQP-AN** | Xác định lý tưởng cống hiến; rèn thể chất; **Tích hợp video phóng sự QPVN: Giờ học thực hành GDQP-AN hào hứng tại trường THPT**. |
-| **08** | **Học Sinh: Xung Kích Hoạt Động Phong Trào** | Tham gia phong trào "Đền ơn đáp nghĩa"; diễn đàn Đoàn - Đội; **Tích hợp video phóng sự Báo QĐND: Nữ sinh & thanh niên viết đơn tình nguyện tòng quân**. |
+| **06** | **Công Dân: Đấu Tranh Chống Tiêu Cực** | Nhận diện tâm lý ngại khó ngại khổ; đấu tranh chống trốn tránh; **Tích hợp video phóng sự ANTV: Xét xử nghiêm minh theo Điều 332 BLHS (Trích đoạn rút gọn 45s)**. |
+| **07** | **Học Sinh: Ý Thức & Môn GDQP-AN** | Xác định lý tưởng cống hiến; rèn thể chất; **Tích hợp video phóng sự QPVN: Giờ học thực hành GDQP-AN (Trích đoạn rút gọn 45s)**. |
+| **08** | **Học Sinh: Xung Kích Hoạt Động Phong Trào** | Tham gia phong trào "Đền ơn đáp nghĩa"; diễn đàn Đoàn - Đội; **Tích hợp video phóng sự Báo QĐND: Nữ sinh & thanh niên tình nguyện (Trích đoạn rút gọn 45s)**. |
 | **09** | **Học Sinh: Đấu Tranh Nhận Thức Sai Lệch** | Phản bác luận điệu "đi nghĩa vụ mất 2 năm tương lai"; bài trừ các "mẹo" trốn khám độc hại trên MXH; tạo lập "sức đề kháng" tư tưởng học đường. |
 | **10** | **Tổng Kết & Thông Điệp Tuổi Trẻ** | Thông điệp: *"Tuổi trẻ Việt Nam: Sẵn sàng bảo vệ Tổ quốc — Vì bình yên của nhân dân"*; 3 cam kết danh dự và hiệu ứng pháo hoa chúc mừng. |
 

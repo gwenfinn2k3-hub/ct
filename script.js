@@ -66,6 +66,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const simVideoTitle = document.getElementById('simVideoTitle');
   const simVideoLead = document.getElementById('simVideoLead');
   const simChyronText = document.getElementById('simChyronText');
+  const videoDurationBadge = document.getElementById('videoDurationBadge');
+  const btnExternalYouTube = document.getElementById('btnExternalYouTube');
   const videoTriggerBtns = document.querySelectorAll('.btn-video-trigger');
 
   // ==========================================================================
@@ -461,8 +463,10 @@ document.addEventListener('DOMContentLoaded', () => {
       channelBadge: "VTV1 • BAN THỜI SỰ",
       sourceName: "Đài Truyền hình Việt Nam (VTV1)",
       date: "Bản tin Thời sự 19h",
+      durationText: "45 giây (Cắt trích đoạn)",
+      watchUrl: "https://www.youtube.com/watch?v=aj8Z9euvnj4",
       title: "Phóng sự: Rộn ràng Ngày hội tòng quân - Thanh niên cả nước hăng hái lên đường nhập ngũ",
-      embedUrl: "https://www.youtube-nocookie.com/embed/5k99e-c_1-s?autoplay=1&rel=0",
+      embedUrl: "https://www.youtube.com/embed/aj8Z9euvnj4?start=18&end=63&autoplay=1&rel=0",
       chyron: "HÀNG VẠN THANH NIÊN CẢ NƯỚC BƯỚC QUA CẦU VINH QUANG THỰC HIỆN NGHĨA VỤ QUÂN SỰ VÀ CAND",
       leadText: "Ghi nhận không khí tưng bừng, trang trọng và đầy khí thế tại các điểm giao nhận quân trên toàn quốc. Các tân binh thể hiện quyết tâm sẵn sàng cống hiến tuổi trẻ cho sự nghiệp bảo vệ vững chắc Tổ quốc Việt Nam XHCN.",
       keyPoints: [
@@ -475,8 +479,10 @@ document.addEventListener('DOMContentLoaded', () => {
       channelBadge: "ANTV • TRUYỀN HÌNH CAND",
       sourceName: "Truyền hình Công an Nhân dân (ANTV)",
       date: "Bản tin An ninh & Pháp luật",
+      durationText: "45 giây (Cắt trích đoạn)",
+      watchUrl: "https://www.youtube.com/watch?v=HjiF7_AmN0U",
       title: "Bản tin ANTV: Xử lý nghiêm minh theo Điều 332 Bộ luật Hình sự đối với hành vi trốn tránh NVQS",
-      embedUrl: "https://www.youtube-nocookie.com/embed/qg9bVZZYw9c?autoplay=1&rel=0",
+      embedUrl: "https://www.youtube.com/embed/HjiF7_AmN0U?start=20&end=65&autoplay=1&rel=0",
       chyron: "TÒA ÁN NHÂN DÂN XÉT XỬ LƯU ĐỘNG CÁC ĐỐI TƯỢNG TRỐN TRÁNH NGHĨA VỤ QUÂN SỰ - PHẠT TÙ ĐẾN 5 NĂM",
       leadText: "Phản ánh các phiên tòa xét xử lưu động đối với các hành vi không chấp hành lệnh khám tuyển hoặc lệnh gọi nhập ngũ sau khi đã bị xử phạt vi phạm hành chính. Bản án thích đáng nhằm giáo dục, răn đe và giữ nghiêm kỷ cương phép nước.",
       keyPoints: [
@@ -489,8 +495,10 @@ document.addEventListener('DOMContentLoaded', () => {
       channelBadge: "QPVN • KÊNH QUỐC PHÒNG",
       sourceName: "Truyền hình Quốc phòng Việt Nam (QPVN)",
       date: "Chuyên mục GDQP Học đường",
+      durationText: "45 giây (Cắt trích đoạn)",
+      watchUrl: "https://www.youtube.com/watch?v=_bkw4h6V-pw",
       title: "Phóng sự: Đổi mới, nâng cao chất lượng giờ học Giáo dục Quốc phòng - An ninh trong trường THPT",
-      embedUrl: "https://www.youtube-nocookie.com/embed/bB3yQd2tYv0?autoplay=1&rel=0",
+      embedUrl: "https://www.youtube.com/embed/_bkw4h6V-pw?start=15&end=60&autoplay=1&rel=0",
       chyron: "HỌC SINH THPT HÀO HỨNG VỚI CÁC TIẾT HỌC THỰC HÀNH BẮN SÚNG TIỂU LIÊN, ĐIỀU LỆNH VÀ BĂNG BÓ CỨU THƯƠNG",
       leadText: "Đổi mới phương pháp giảng dạy lý thuyết gắn liền với trải nghiệm thực tế quân sự tại các trường trung học phổ thông, giúp học sinh rèn luyện tính kỷ luật, tác phong nghiêm túc và tình yêu người lính Cụ Hồ.",
       keyPoints: [
@@ -500,11 +508,13 @@ document.addEventListener('DOMContentLoaded', () => {
       ]
     },
     {
-      channelBadge: "BÁO QĐND • TIỀN PHONG",
-      sourceName: "Báo Quân đội Nhân dân & Báo Tiền Phong",
+      channelBadge: "BÁO QĐND • VTV24",
+      sourceName: "Báo Quân đội Nhân dân & VTV24",
       date: "Phóng sự Tuổi trẻ Xung kích",
+      durationText: "45 giây (Cắt trích đoạn)",
+      watchUrl: "https://www.youtube.com/watch?v=52Xcv0fKMZ4",
       title: "Phóng sự: Lan tỏa những lá đơn tình nguyện tòng quân của nữ sinh và thanh niên trẻ",
-      embedUrl: "https://www.youtube-nocookie.com/embed/pC8cOwhB3r4?autoplay=1&rel=0",
+      embedUrl: "https://www.youtube.com/embed/52Xcv0fKMZ4?start=12&end=57&autoplay=1&rel=0",
       chyron: "HÀNG NGHÌN LÁ ĐƠN VIẾT BẰNG TAY XIN TÌNH NGUYỆN GIA NHẬP QUÂN ĐỘI VÀ CÔNG AN NHÂN DÂN",
       leadText: "Hình ảnh những cô gái vừa tốt nghiệp đại học hay các chàng trai trẻ gác lại công việc với thu nhập hấp dẫn để viết đơn tình nguyện nhập ngũ, lan tỏa tinh thần xung phong bất khuất của thanh niên Việt Nam.",
       keyPoints: [
@@ -524,6 +534,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (videoSourceBadge) videoSourceBadge.textContent = item.sourceName;
     if (videoDateBadge) videoDateBadge.innerHTML = `<i class="fa-regular fa-calendar-days mr-1"></i>${item.date}`;
+    if (videoDurationBadge) videoDurationBadge.innerHTML = `<i class="fa-solid fa-scissors mr-1 text-amber-400"></i>Thời lượng cắt ngắn: ${item.durationText}`;
+    if (btnExternalYouTube) btnExternalYouTube.href = item.watchUrl;
     if (videoArticleTitle) videoArticleTitle.textContent = item.title;
 
     if (simChannelBadge) simChannelBadge.textContent = item.channelBadge;

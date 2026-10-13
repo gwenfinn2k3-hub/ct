@@ -402,7 +402,7 @@
               <span>VTV1 • THỜI SỰ ĐẶC BIỆT</span>
             </span>
             <span class="px-2 py-0.5 rounded bg-black/60 text-slate-200 text-[11px] font-mono border border-white/20">
-              <i class="fa-regular fa-clock mr-1 text-red-400"></i>03:45
+              <i class="fa-solid fa-scissors mr-1 text-amber-300"></i>00:45 (Cắt ngắn)
             </span>
           </div>
 
@@ -652,10 +652,10 @@
           </div>
         </div>
         <div class="shrink-0 flex items-center gap-2.5">
-          <span class="hidden md:inline-flex text-xs text-slate-300 items-center gap-1 font-mono"><i class="fa-regular fa-clock text-red-400"></i> 04:12</span>
+          <span class="hidden md:inline-flex text-xs text-slate-300 items-center gap-1 font-mono"><i class="fa-solid fa-scissors text-amber-300"></i> 00:45 (Cắt ngắn)</span>
           <button class="px-3 py-1.5 rounded-lg bg-red-600 hover:bg-red-500 text-white text-xs font-bold transition shadow-md flex items-center gap-1.5 pointer-events-none">
             <i class="fa-solid fa-circle-play"></i>
-            <span>Xem Phóng Sự</span>
+            <span>Xem Phóng Sự (45s)</span>
           </button>
         </div>
       </div>
@@ -720,7 +720,7 @@
           </ul>
           <button class="w-full mt-3 py-1.5 px-3 rounded-lg bg-emerald-950/70 hover:bg-emerald-900 border border-emerald-500/50 text-emerald-300 hover:text-white text-xs font-bold transition flex items-center justify-center gap-2 btn-video-trigger shadow-md group" data-video-index="2" title="Nhấp để xem phóng sự QPVN">
             <i class="fa-solid fa-play text-[10px] text-emerald-400 group-hover:scale-125 transition"></i>
-            <span>Xem Phóng Sự QPVN: Tiết học GDQP-AN</span>
+            <span>Xem Phóng Sự QPVN: Tiết học GDQP-AN (Cắt 45s)</span>
           </button>
         </div>
 
@@ -824,7 +824,7 @@
           </div>
           <button class="w-full mt-3.5 py-2 px-3 rounded-xl bg-red-900/80 hover:bg-red-800 border border-amber-400/50 text-white text-xs font-bold transition flex items-center justify-center gap-2 btn-video-trigger shadow-lg group" data-video-index="3" title="Nhấp để xem phóng sự Báo QĐND">
             <i class="fa-solid fa-circle-play text-amber-400 text-sm group-hover:scale-115 transition"></i>
-            <span>Xem Phóng Sự: Nữ sinh & Thanh niên viết đơn tình nguyện</span>
+            <span>Xem Phóng Sự: Nữ sinh & Thanh niên tình nguyện (Cắt 45s)</span>
           </button>
         </div>
       </div>
@@ -1161,19 +1161,28 @@
 
         <!-- Video Metadata & Journalistic Key Takeaways -->
         <div class="p-4 rounded-xl glass-card border border-slate-800 space-y-3">
-          <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800 pb-2.5">
+          <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-800 pb-2.5">
             <div>
-              <div class="inline-flex items-center gap-2">
+              <div class="inline-flex items-center gap-2 flex-wrap">
                 <span id="videoSourceBadge" class="px-2.5 py-0.5 rounded text-[11px] font-bold bg-red-600/30 text-red-300 border border-red-500/40">Đài Truyền hình Việt Nam (VTV)</span>
                 <span id="videoDateBadge" class="text-xs text-slate-400"><i class="fa-regular fa-calendar-days mr-1"></i>Bản tin Thời sự</span>
+                <span id="videoDurationBadge" class="px-2 py-0.5 rounded text-[11px] font-bold bg-amber-500/20 text-amber-300 border border-amber-500/40">
+                  <i class="fa-solid fa-scissors mr-1 text-amber-400"></i>Thời lượng cắt ngắn: 45s
+                </span>
               </div>
               <h3 id="videoArticleTitle" class="text-base sm:text-lg font-bold text-white mt-1">Hào khí thanh niên cả nước trong Ngày hội tòng quân</h3>
             </div>
-            <!-- Toggle source button -->
-            <button id="btnToggleSimulated" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs text-slate-300 hover:text-white transition flex items-center gap-1.5" title="Chuyển chế độ xem">
-              <i class="fa-solid fa-arrows-rotate text-amber-400"></i>
-              <span id="toggleSimulatedText">Xem tóm tắt bản tin</span>
-            </button>
+            <!-- Action buttons -->
+            <div class="flex items-center gap-2">
+              <a id="btnExternalYouTube" href="https://www.youtube.com/watch?v=aj8Z9euvnj4" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 rounded-lg bg-red-600 hover:bg-red-500 text-white text-xs font-bold transition flex items-center gap-1.5 shadow-md" title="Mở xem video gốc trên YouTube">
+                <i class="fa-brands fa-youtube text-sm"></i>
+                <span class="hidden sm:inline">Mở trên YouTube</span>
+              </a>
+              <button id="btnToggleSimulated" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs text-slate-300 hover:text-white transition flex items-center gap-1.5" title="Chuyển chế độ xem">
+                <i class="fa-solid fa-arrows-rotate text-amber-400"></i>
+                <span id="toggleSimulatedText">Xem tóm tắt bản tin</span>
+              </button>
+            </div>
           </div>
 
           <!-- Bulleted Insights for Presenter -->
