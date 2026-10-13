@@ -354,3 +354,31 @@ body {
 .shadow-glow-blue {
   box-shadow: 0 0 30px -5px rgba(10, 37, 64, 0.45);
 }
+
+/* ==========================================================================
+   National Flag Styling & Majestic Waving Animation
+   ========================================================================== */
+.flag-wave {
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 18px rgba(218, 37, 29, 0.45), 0 0 14px rgba(255, 215, 0, 0.4);
+  transition: transform 0.3s var(--ease-spring), box-shadow 0.3s ease;
+  animation: flagFlutter 4.5s ease-in-out infinite alternate;
+}
+
+@keyframes flagFlutter {
+  0% { transform: perspective(400px) rotateY(0deg) skewY(0deg); }
+  50% { transform: perspective(400px) rotateY(4deg) skewY(1deg); }
+  100% { transform: perspective(400px) rotateY(-3deg) skewY(-0.8deg); }
+}
+
+.flag-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 215, 0, 0.85);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4), 0 0 8px rgba(245, 158, 11, 0.35);
+  flex-shrink: 0;
+}
