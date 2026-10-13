@@ -1,42 +1,4 @@
 /* ==========================================================================
-   Tailwind CSS Configuration & Custom Presets
-   ========================================================================== */
-window.tailwind = window.tailwind || {};
-tailwind.config = {
-    darkMode: 'class',
-    theme: {
-      extend: {
-        colors: {
-          flag: {
-            red: '#DA251D',
-            deep: '#9B111E',
-            dark: '#58080E',
-            gold: '#FFFF00',
-            amber: '#FFB800',
-            bronze: '#C59A3F'
-          },
-          military: {
-            army: '#1E3A2F',
-            darkArmy: '#0F231B',
-            police: '#0A2540',
-            deepBlue: '#061628',
-            accent: '#225740'
-          }
-        },
-        fontFamily: {
-          sans: ['"Be Vietnam Pro"', 'sans-serif'],
-        },
-        boxShadow: {
-          'glow-red': '0 0 35px -5px rgba(218, 37, 29, 0.45)',
-          'glow-gold': '0 0 30px -5px rgba(255, 184, 0, 0.35)',
-          'glow-blue': '0 0 30px -5px rgba(10, 37, 64, 0.45)',
-        }
-      }
-    }
-  };
-}
-
-/* ==========================================================================
    Interactive Presentation Deck Controller
    ========================================================================== */
 document.addEventListener('DOMContentLoaded', () => {

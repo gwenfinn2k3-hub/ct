@@ -143,3 +143,18 @@ body {
   background: rgba(245, 158, 11, 0.4);
   border-radius: 9999px;
 }
+
+/* Custom Theme Utility Classes */
+.bg-military-army { background-color: #1E3A2F; }
+.bg-military-darkArmy { background-color: #0F231B; }
+.bg-military-police { background-color: #0A2540; }
+.bg-military-deepBlue { background-color: #061628; }
+.bg-military-accent { background-color: #225740; }
+.border-l-military-accent { border-left-color: #225740; }
+.border-military-accent { border-color: #225740; }
+.text-flag-gold { color: #FFFF00; }
+.text-flag-amber { color: #FFB800; }
+.shadow-glow-red { box-shadow: 0 0 35px -5px rgba(218, 37, 29, 0.45); }
+.shadow-glow-gold { box-shadow: 0 0 30px -5px rgba(255, 184, 0, 0.35); }
+.shadow-glow-blue { box-shadow: 0 0 30px -5px rgba(10, 37, 64, 0.45); }
+
