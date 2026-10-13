@@ -65,6 +65,11 @@
 
   <!-- FLOATING HUD BAR (TOP-RIGHT CONTROLS) -->
   <header class="fixed top-4 right-6 z-50 flex items-center gap-2 bg-slate-900/80 backdrop-blur-md px-3.5 py-2 rounded-full border border-slate-700/60 shadow-2xl text-xs font-medium">
+    <button id="btnMediaCenter" class="flex items-center gap-1.5 px-2.5 py-1 rounded-full hover:bg-slate-800 text-slate-300 hover:text-red-400 transition" title="Kho Phóng sự Video Báo chí (Phím V)">
+      <i class="fa-solid fa-film text-red-500 text-xs animate-pulse"></i>
+      <span class="hidden md:inline font-semibold text-red-400">Video Báo chí</span>
+    </button>
+    <div class="w-px h-4 bg-slate-700/80"></div>
     <button id="btnOverview" class="flex items-center gap-1.5 px-2.5 py-1 rounded-full hover:bg-slate-800 text-slate-300 hover:text-amber-400 transition" title="Mục lục các slide (Phím M hoặc O)">
       <i class="fa-solid fa-table-cells-large text-sm"></i>
       <span class="hidden md:inline">Mục lục</span>
@@ -383,24 +388,47 @@
 
       <!-- Grid Content -->
       <div class="grid grid-cols-1 md:grid-cols-12 gap-6 my-auto items-center">
-        <!-- Left: Image & Badge (5 cols) -->
-        <div class="md:col-span-5 relative rounded-2xl overflow-hidden shadow-2xl border border-slate-700/80 group anim-scale-in delay-150">
+        <!-- Left: Press Video Showcase & Badge (5 cols) -->
+        <div class="md:col-span-5 relative rounded-2xl overflow-hidden shadow-2xl border border-red-500/50 group anim-scale-in delay-150 press-video-card btn-video-trigger cursor-pointer" data-video-index="0" title="Nhấp để xem phóng sự VTV về Ngày hội tòng quân">
           <img src="https://images.unsplash.com/photo-1541872703-74c5e44368f9?auto=format&fit=crop&w=900&q=80" 
                alt="Thanh niên sẵn sàng nhập ngũ" 
-               class="w-full h-64 md:h-72 object-cover transition duration-500 group-hover:scale-105 filter brightness-90">
-          <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent"></div>
-          <div class="absolute bottom-4 left-4 right-4">
-            <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded-lg bg-red-900/90 border border-amber-400/60 text-white text-xs font-bold uppercase tracking-wider backdrop-blur-sm shadow-md">
-              <div class="w-5 h-3.5 flag-badge">
+               class="w-full h-64 md:h-72 object-cover transition duration-500 group-hover:scale-105 filter brightness-75">
+          <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/50 to-black/30"></div>
+          
+          <!-- Top Media Badges -->
+          <div class="absolute top-3 left-3 right-3 flex items-center justify-between z-10 pointer-events-none">
+            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-red-600/90 text-white text-[11px] font-extrabold uppercase tracking-wide border border-red-400/50 backdrop-blur-md shadow-lg">
+              <i class="fa-solid fa-satellite-dish animate-pulse text-yellow-300"></i>
+              <span>VTV1 • THỜI SỰ ĐẶC BIỆT</span>
+            </span>
+            <span class="px-2 py-0.5 rounded bg-black/60 text-slate-200 text-[11px] font-mono border border-white/20">
+              <i class="fa-regular fa-clock mr-1 text-red-400"></i>03:45
+            </span>
+          </div>
+
+          <!-- Centered Play Button -->
+          <div class="absolute inset-0 flex flex-col items-center justify-center z-10 pointer-events-none">
+            <div class="play-pulse-btn shadow-2xl group-hover:scale-110 transition">
+              <i class="fa-solid fa-play text-xl ml-1 text-white"></i>
+            </div>
+            <span class="mt-2.5 px-3 py-1 rounded-full bg-slate-900/80 border border-red-500/60 text-amber-300 text-xs font-bold tracking-wide backdrop-blur-md shadow-lg">
+              <i class="fa-solid fa-circle-play mr-1 text-red-400"></i> Xem Phóng Sự VTV / QPVN
+            </span>
+          </div>
+
+          <!-- Bottom Card Caption -->
+          <div class="absolute bottom-3 left-3 right-3 z-10 pointer-events-none">
+            <div class="inline-flex items-center gap-2 px-2 py-0.5 rounded bg-red-950/80 border border-amber-400/50 text-white text-[11px] font-bold uppercase tracking-wider backdrop-blur-sm">
+              <div class="w-4 h-3 flag-badge">
                 <svg viewBox="0 0 900 600" class="w-full h-full filter drop-shadow-sm">
-  <rect width="900" height="600" fill="#DA251D"/>
-  <polygon points="450,120 488,238 612,238 511,311 550,429 450,356 350,429 389,311 288,238 412,238" fill="#FFFF00"/>
-</svg>
+                  <rect width="900" height="600" fill="#DA251D"/>
+                  <polygon points="450,120 488,238 612,238 511,311 550,429 450,356 350,429 389,311 288,238 412,238" fill="#FFFF00"/>
+                </svg>
               </div>
               <span>Hào khí thanh niên Việt Nam</span>
             </div>
-            <div class="text-base sm:text-lg font-bold text-white mt-1">Sẵn sàng nhận lệnh — Nghiêm túc khám tuyển</div>
-            <div class="text-xs sm:text-sm text-slate-200">Tuyển chọn người có phẩm chất đạo đức & sức khỏe tốt</div>
+            <div class="text-sm sm:text-base font-bold text-white mt-1 drop-shadow">Rộn ràng Ngày hội tòng quân toàn quốc</div>
+            <div class="text-[11px] sm:text-xs text-slate-300">Tư liệu báo chí chính thống phản ánh tinh thần nhập ngũ</div>
           </div>
         </div>
 
@@ -605,6 +633,33 @@
         </div>
       </div>
 
+      <!-- Press Video Investigation Banner: ANTV & VTV -->
+      <div class="press-video-card p-3 sm:p-3.5 rounded-xl flex items-center justify-between gap-4 border border-red-500/40 bg-gradient-to-r from-red-950/80 via-slate-900/90 to-slate-900/90 btn-video-trigger anim-fade-up delay-250 cursor-pointer shadow-lg hover:border-red-500" data-video-index="1" title="Nhấp để xem bản tin phóng sự ANTV">
+        <div class="flex items-center gap-3 min-w-0">
+          <div class="w-10 h-10 rounded-full bg-red-600/30 text-red-400 flex items-center justify-center shrink-0 border border-red-500/50 shadow-glow-red">
+            <i class="fa-solid fa-play text-sm ml-0.5 text-white"></i>
+          </div>
+          <div class="min-w-0">
+            <div class="inline-flex items-center gap-2">
+              <span class="px-2 py-0.5 rounded text-[10px] font-extrabold uppercase bg-red-600 text-white tracking-wider flex items-center gap-1">
+                <i class="fa-solid fa-triangle-exclamation text-[9px]"></i> ANTV • TRUYỀN HÌNH CAND
+              </span>
+              <span class="text-xs text-amber-300 font-semibold hidden sm:inline">Thời sự An ninh & Pháp luật</span>
+            </div>
+            <div class="text-xs sm:text-sm md:text-[15px] font-bold text-white mt-0.5 truncate">
+              Phóng sự điều tra: Xử lý nghiêm minh theo Điều 332 Bộ luật Hình sự về trốn tránh NVQS
+            </div>
+          </div>
+        </div>
+        <div class="shrink-0 flex items-center gap-2.5">
+          <span class="hidden md:inline-flex text-xs text-slate-300 items-center gap-1 font-mono"><i class="fa-regular fa-clock text-red-400"></i> 04:12</span>
+          <button class="px-3 py-1.5 rounded-lg bg-red-600 hover:bg-red-500 text-white text-xs font-bold transition shadow-md flex items-center gap-1.5 pointer-events-none">
+            <i class="fa-solid fa-circle-play"></i>
+            <span>Xem Phóng Sự</span>
+          </button>
+        </div>
+      </div>
+
       <!-- Slide 6 Footer Note -->
       <div class="flex items-center justify-between text-xs sm:text-sm text-slate-300 pt-3 border-t border-slate-800 anim-fade-up delay-300">
         <span class="flex items-center gap-1.5"><i class="fa-solid fa-scale-balanced text-amber-400"></i> Pháp luật công bằng, không có vùng cấm, không có ngoại lệ cho bất kỳ ai</span>
@@ -663,6 +718,10 @@
             <li><i class="fa-solid fa-check text-emerald-400 mr-1.5"></i> Nắm vững quan điểm đường lối quân sự</li>
             <li><i class="fa-solid fa-check text-emerald-400 mr-1.5"></i> Thành thạo điều lệnh, băng bó, tháo lắp súng cơ bản</li>
           </ul>
+          <button class="w-full mt-3 py-1.5 px-3 rounded-lg bg-emerald-950/70 hover:bg-emerald-900 border border-emerald-500/50 text-emerald-300 hover:text-white text-xs font-bold transition flex items-center justify-center gap-2 btn-video-trigger shadow-md group" data-video-index="2" title="Nhấp để xem phóng sự QPVN">
+            <i class="fa-solid fa-play text-[10px] text-emerald-400 group-hover:scale-125 transition"></i>
+            <span>Xem Phóng Sự QPVN: Tiết học GDQP-AN</span>
+          </button>
         </div>
 
         <!-- Aspect 3: Rèn luyện thể chất & kỷ luật -->
@@ -763,6 +822,10 @@
             <span>•</span>
             <span>#SẵnSàng</span>
           </div>
+          <button class="w-full mt-3.5 py-2 px-3 rounded-xl bg-red-900/80 hover:bg-red-800 border border-amber-400/50 text-white text-xs font-bold transition flex items-center justify-center gap-2 btn-video-trigger shadow-lg group" data-video-index="3" title="Nhấp để xem phóng sự Báo QĐND">
+            <i class="fa-solid fa-circle-play text-amber-400 text-sm group-hover:scale-115 transition"></i>
+            <span>Xem Phóng Sự: Nữ sinh & Thanh niên viết đơn tình nguyện</span>
+          </button>
         </div>
       </div>
 
@@ -1008,6 +1071,120 @@
         <div class="flex items-center justify-between p-2 rounded bg-slate-800/60">
           <span>Bật / Tắt Tự động trình chiếu:</span>
           <span class="font-mono bg-slate-700 px-2 py-0.5 rounded text-amber-300 font-bold">Phím A</span>
+        </div>
+        <div class="flex items-center justify-between p-2 rounded bg-slate-800/60">
+          <span>Mở Video phóng sự báo chí:</span>
+          <span class="font-mono bg-slate-700 px-2 py-0.5 rounded text-red-400 font-bold">Phím V</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== MODAL: PRESS & NEWS VIDEO CENTER ==================== -->
+  <div id="videoModal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md opacity-0 pointer-events-none transition-all duration-300 flex items-center justify-center p-3 sm:p-5">
+    <div class="bg-slate-900/95 border border-red-500/40 rounded-2xl w-full max-w-4xl max-h-[92vh] flex flex-col shadow-2xl overflow-hidden">
+      <!-- Modal Header -->
+      <div class="p-3.5 sm:p-4 border-b border-slate-800 flex items-center justify-between bg-slate-950/80">
+        <div class="flex items-center gap-2.5">
+          <span class="w-2.5 h-2.5 rounded-full bg-red-600 animate-ping"></span>
+          <div class="w-2.5 h-2.5 rounded-full bg-red-600 -ml-5"></div>
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="text-xs sm:text-sm font-extrabold text-white uppercase tracking-wider">Kho Tư Liệu Phóng Sự Báo Chí & Truyền Hình</span>
+              <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-red-950 border border-red-500/60 text-red-300 uppercase">Chính Thống</span>
+            </div>
+            <p class="text-[11px] sm:text-xs text-slate-400 hidden sm:block">Các phóng sự nổi bật từ Đài Truyền hình Việt Nam (VTV), Truyền hình CAND (ANTV), Kênh Quốc phòng (QPVN) & Báo QĐND</p>
+          </div>
+        </div>
+        <button id="btnCloseVideoModal" class="w-8 h-8 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white flex items-center justify-center text-xs transition">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <!-- Channel / Video Tab Switcher -->
+      <div class="flex items-center gap-1.5 p-2 sm:px-4 bg-slate-950/50 border-b border-slate-800 overflow-x-auto text-xs">
+        <button class="media-tab-btn active px-3 py-1.5 rounded-lg border border-slate-700 font-bold shrink-0 flex items-center gap-1.5 text-white" data-tab="0">
+          <i class="fa-solid fa-satellite-dish text-red-400"></i>
+          <span>1. [VTV] Ngày Hội Tòng Quân</span>
+        </button>
+        <button class="media-tab-btn px-3 py-1.5 rounded-lg border border-slate-700 font-bold shrink-0 flex items-center gap-1.5 text-slate-300 hover:text-white hover:bg-slate-800" data-tab="1">
+          <i class="fa-solid fa-shield-halved text-amber-400"></i>
+          <span>2. [ANTV] Xử Lý Trốn NVQS</span>
+        </button>
+        <button class="media-tab-btn px-3 py-1.5 rounded-lg border border-slate-700 font-bold shrink-0 flex items-center gap-1.5 text-slate-300 hover:text-white hover:bg-slate-800" data-tab="2">
+          <i class="fa-solid fa-person-military-pointing text-emerald-400"></i>
+          <span>3. [QPVN] Tiết Học GDQP-AN</span>
+        </button>
+        <button class="media-tab-btn px-3 py-1.5 rounded-lg border border-slate-700 font-bold shrink-0 flex items-center gap-1.5 text-slate-300 hover:text-white hover:bg-slate-800" data-tab="3">
+          <i class="fa-solid fa-feather-pointed text-yellow-400"></i>
+          <span>4. [Báo QĐND] Đơn Tình Nguyện</span>
+        </button>
+      </div>
+
+      <!-- Scrollable Video & Content Body -->
+      <div class="overflow-y-auto p-3 sm:p-5 space-y-4">
+        <!-- 16:9 Video Player Container -->
+        <div class="relative w-full aspect-video rounded-xl overflow-hidden bg-black border border-slate-800 shadow-2xl">
+          <!-- Video Frame -->
+          <iframe id="videoPlayerFrame" 
+                  class="w-full h-full" 
+                  src="" 
+                  title="Video Báo chí" 
+                  frameborder="0" 
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                  referrerpolicy="strict-origin-when-cross-origin" 
+                  allowfullscreen>
+          </iframe>
+
+          <!-- Fallback Simulated Player for Offline or Blocked Iframe -->
+          <div id="simulatedPlayer" class="hidden absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-900 to-slate-950 p-5 flex flex-col justify-between">
+            <div class="flex items-center justify-between">
+              <span id="simChannelBadge" class="px-2.5 py-1 rounded bg-red-600 text-white text-xs font-black uppercase tracking-wider">VTV1 THỜI SỰ</span>
+              <span class="text-xs text-amber-400 font-mono">PHÁT SÓNG CHÍNH THỨC</span>
+            </div>
+            <div class="text-center my-auto px-4">
+              <div class="w-16 h-16 rounded-full bg-red-600/20 border-2 border-red-500 text-red-400 flex items-center justify-center mx-auto mb-3 shadow-glow-red animate-pulse">
+                <i class="fa-solid fa-broadcast-tower text-2xl"></i>
+              </div>
+              <h3 id="simVideoTitle" class="text-lg sm:text-xl font-bold text-white mb-2">Tư liệu báo chí chính luận</h3>
+              <p id="simVideoLead" class="text-xs sm:text-sm text-slate-300 max-w-xl mx-auto leading-relaxed">
+                Nội dung bản tin truyền hình được trích xuất phục vụ bài thuyết trình.
+              </p>
+            </div>
+            <!-- News Chyron Ticker -->
+            <div class="news-chyron -mx-5 -mb-5 px-4 py-2 flex items-center gap-3 text-xs">
+              <span class="px-2 py-0.5 rounded bg-white text-red-700 font-black tracking-wider uppercase text-[10px]">TIN NÓNG</span>
+              <span id="simChyronText" class="text-white font-medium truncate">...</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Video Metadata & Journalistic Key Takeaways -->
+        <div class="p-4 rounded-xl glass-card border border-slate-800 space-y-3">
+          <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800 pb-2.5">
+            <div>
+              <div class="inline-flex items-center gap-2">
+                <span id="videoSourceBadge" class="px-2.5 py-0.5 rounded text-[11px] font-bold bg-red-600/30 text-red-300 border border-red-500/40">Đài Truyền hình Việt Nam (VTV)</span>
+                <span id="videoDateBadge" class="text-xs text-slate-400"><i class="fa-regular fa-calendar-days mr-1"></i>Bản tin Thời sự</span>
+              </div>
+              <h3 id="videoArticleTitle" class="text-base sm:text-lg font-bold text-white mt-1">Hào khí thanh niên cả nước trong Ngày hội tòng quân</h3>
+            </div>
+            <!-- Toggle source button -->
+            <button id="btnToggleSimulated" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs text-slate-300 hover:text-white transition flex items-center gap-1.5" title="Chuyển chế độ xem">
+              <i class="fa-solid fa-arrows-rotate text-amber-400"></i>
+              <span id="toggleSimulatedText">Xem tóm tắt bản tin</span>
+            </button>
+          </div>
+
+          <!-- Bulleted Insights for Presenter -->
+          <div>
+            <span class="text-xs font-bold text-amber-400 uppercase tracking-wider block mb-1.5 flex items-center gap-1.5">
+              <i class="fa-solid fa-list-check"></i> Ý chính từ phóng sự báo chí để trình bày:
+            </span>
+            <ul id="videoKeyPoints" class="space-y-1.5 text-xs sm:text-sm text-slate-200">
+              <!-- Dynamically populated -->
+            </ul>
+          </div>
         </div>
       </div>
     </div>

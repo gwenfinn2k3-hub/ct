@@ -29,21 +29,29 @@ Khác với các slide PowerPoint truyền thống, dự án áp dụng các cô
    - Các thẻ nội dung tự động nghiêng theo góc di chuột với độ sâu 3D chân thực, viền trên phản chiếu dải sáng gương mờ sang trọng.
 7. **Chuyển Cảnh So Le Mượt Mà (Staggered Animation):**
    - Ứng dụng đường cong chuyển động tự nhiên (`cubic-bezier(0.16, 1, 0.3, 1)`). Tiêu đề, thẻ card và danh sách xuất hiện so le tuần tự, không gây rối mắt và đạt chuẩn 60/120fps.
+8. **Kho Phóng Sự & Video Báo Chí Chính Thống (Press Video Center):**
+   - Tích hợp trực tiếp các phóng sự truyền hình và bài báo chính luận từ các cơ quan báo chí, truyền thông quốc gia hàng đầu:
+     - **VTV1 / VTV24 (Đài Truyền hình Việt Nam):** Phóng sự Thời sự về *"Rộn ràng Ngày hội tòng quân trên khắp mọi miền Tổ quốc"*.
+     - **ANTV (Truyền hình Công an Nhân dân):** Phóng sự điều tra & xét xử lưu động *"Xử lý nghiêm minh theo Điều 332 Bộ luật Hình sự đối với hành vi trốn tránh nghĩa vụ quân sự"*.
+     - **QPVN (Kênh Truyền hình Quốc phòng Việt Nam):** Chuyên mục *"Đổi mới giờ học Giáo dục Quốc phòng - An ninh sôi nổi, bổ ích trong trường THPT"*.
+     - **Báo Quân đội Nhân dân (qdnd.vn) & Báo Tiền Phong:** Phóng sự *"Lan tỏa những lá đơn tình nguyện tòng quân của nữ sinh và thanh niên trẻ"*.
+   - Hỗ trợ xem trực tiếp qua khung phát video 16:9, có kèm bản tóm tắt nội dung chính để người thuyết trình dễ dàng trích dẫn số liệu ghi điểm cao, cùng chế độ mô phỏng bản tin truyền hình độc quyền.
+   - Có thể mở nhanh bằng nút **`Video Báo chí`** trên thanh công cụ HUD hoặc phím tắt **`V`**, hoặc nhấp trực tiếp vào các thẻ video trên Slide 4, Slide 6, Slide 7 và Slide 8.
 
 ---
 
 ## 📑 Dàn Ý Nội Dung 10 Slide Thuyết Trình
 
-| Slide | Chủ Đề | Nội Dung Trọng Tâm |
+| Slide | Chủ Đề | Nội Dung Trọng Tâm & Tư Liệu Báo Chí |
 | :---: | :--- | :--- |
 | **01** | **Trang Bìa Chính Thức** | Tiêu đề chuyên đề Phần III, trích dẫn tư tưởng Hiến pháp 2013, 2 trụ cột QĐND & CAND và đối tượng học sinh. |
 | **02** | **Khái Quát Hai Nhóm Trách Nhiệm** | Phân định rõ 2 trụ cột: (1) Trách nhiệm pháp lý của Công dân (từ 18 tuổi) & (2) Trách nhiệm rèn luyện của Học sinh. |
 | **03** | **Công Dân: Đăng Ký Nghĩa Vụ Đúng Hạn** | Đăng ký lần đầu (17 tuổi), thủ tục chuyển đăng ký khi thay đổi nơi cư trú/học tập (>3 tháng), thủ tục tạm hoãn sinh viên. |
-| **04** | **Công Dân: Khám Tuyển & Nhập Ngũ** | Chấp hành nghiêm lệnh gọi khám sức khỏe, có mặt đúng hẹn lệnh nhập ngũ (24 tháng), giấy xác nhận của UBND cấp xã khi có lý do bất khả kháng. |
+| **04** | **Công Dân: Khám Tuyển & Nhập Ngũ** | Chấp hành nghiêm lệnh gọi khám sức khỏe, có mặt đúng hẹn lệnh nhập ngũ (24 tháng); **Tích hợp video phóng sự VTV1: Ngày hội tòng quân toàn quốc**. |
 | **05** | **Công Dân: Tuyên Truyền & Vận Động** | Vận động gia đình làm hậu phương vững chắc; lan tỏa tấm gương tích cực đến bạn bè; phổ biến chế độ chính sách ưu đãi của Đảng & Nhà nước. |
-| **06** | **Công Dân: Đấu Tranh Chống Tiêu Cực** | Nhận diện tâm lý ngại khó ngại khổ; đấu tranh chống trốn tránh, chạy chọt; phổ biến Điều 332 Bộ luật Hình sự (phạt tù đến 5 năm). |
-| **07** | **Học Sinh: Ý Thức & Môn GDQP-AN** | Xác định lý tưởng sống cống hiến; học tập nghiêm túc lý luận & kỹ năng quân sự môn GDQP&AN; rèn thể chất và nếp sống kỷ luật tự giác. |
-| **08** | **Học Sinh: Xung Kích Hoạt Động Phong Trào** | Tham gia phong trào "Đền ơn đáp nghĩa", diễn đàn Đoàn - Đội dưới cờ; sáng tạo nội dung truyền thông hình ảnh đẹp người chiến sĩ. |
+| **06** | **Công Dân: Đấu Tranh Chống Tiêu Cực** | Nhận diện tâm lý ngại khó ngại khổ; đấu tranh chống trốn tránh; **Tích hợp video phóng sự ANTV: Xét xử nghiêm minh theo Điều 332 BLHS (phạt tù đến 5 năm)**. |
+| **07** | **Học Sinh: Ý Thức & Môn GDQP-AN** | Xác định lý tưởng cống hiến; rèn thể chất; **Tích hợp video phóng sự QPVN: Giờ học thực hành GDQP-AN hào hứng tại trường THPT**. |
+| **08** | **Học Sinh: Xung Kích Hoạt Động Phong Trào** | Tham gia phong trào "Đền ơn đáp nghĩa"; diễn đàn Đoàn - Đội; **Tích hợp video phóng sự Báo QĐND: Nữ sinh & thanh niên viết đơn tình nguyện tòng quân**. |
 | **09** | **Học Sinh: Đấu Tranh Nhận Thức Sai Lệch** | Phản bác luận điệu "đi nghĩa vụ mất 2 năm tương lai"; bài trừ các "mẹo" trốn khám độc hại trên MXH; tạo lập "sức đề kháng" tư tưởng học đường. |
 | **10** | **Tổng Kết & Thông Điệp Tuổi Trẻ** | Thông điệp: *"Tuổi trẻ Việt Nam: Sẵn sàng bảo vệ Tổ quốc — Vì bình yên của nhân dân"*; 3 cam kết danh dự và hiệu ứng pháo hoa chúc mừng. |
 
@@ -59,13 +67,14 @@ Người thuyết trình có thể điều khiển bài giảng hoàn toàn bằ
 | **`Phím Trái ←` / `PageUp`** | Lùi về slide trước đó |
 | **Click Nửa Trái Màn Hình** | Lùi về slide trước đó (Trang trước) |
 | **Click Nửa Phải Màn Hình** | Tiến sang slide tiếp theo (Trang tiếp) |
+| **`V`** | Mở ngay **Kho Tư Liệu Phóng Sự Báo Chí & Video VTV/ANTV/QPVN** |
 | **`F`** | Bật / Tắt chế độ **Toàn màn hình** (Fullscreen) |
 | **`M` hoặc `O`** | Mở **Mục lục dạng lưới** để chuyển nhanh đến slide bất kỳ |
 | **`A`** | Bật / Tắt chế độ **Tự động trình chiếu** (7 giây / slide) |
 | **`S`** | Bật / Tắt **Âm thanh hiệu ứng tương tác** |
 | **`Home` / `End`** | Về ngay Slide đầu tiên / Nhảy đến Slide cuối cùng |
 | **`?`** | Mở bảng tra cứu phím tắt hướng dẫn |
-| **`Esc`** | Đóng cửa sổ pop-up (Mục lục hoặc Trợ giúp) |
+| **`Esc`** | Đóng cửa sổ pop-up (Mục lục, Video phóng sự hoặc Trợ giúp) |
 
 ---
 

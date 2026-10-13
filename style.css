@@ -382,3 +382,78 @@ body {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4), 0 0 8px rgba(245, 158, 11, 0.35);
   flex-shrink: 0;
 }
+
+/* ==========================================================================
+   Press & News Media Video Components (VTV, ANTV, QPVN, Báo QĐND)
+   ========================================================================== */
+.press-video-card {
+  position: relative;
+  border-radius: 0.875rem;
+  overflow: hidden;
+  background: linear-gradient(135deg, rgba(220, 38, 38, 0.12) 0%, rgba(15, 23, 42, 0.85) 100%);
+  border: 1px solid rgba(239, 68, 68, 0.35);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 0 15px -3px rgba(220, 38, 38, 0.25);
+  transition: all 0.3s var(--ease-spring);
+  cursor: pointer;
+}
+
+.press-video-card:hover {
+  transform: translateY(-4px) scale(1.015);
+  border-color: rgba(239, 68, 68, 0.7);
+  box-shadow: 0 16px 32px -6px rgba(0, 0, 0, 0.7), 0 0 24px 2px rgba(239, 68, 68, 0.45);
+}
+
+.play-pulse-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.25rem;
+  height: 3.25rem;
+  border-radius: 9999px;
+  background: linear-gradient(135deg, #EF4444 0%, #B91C1C 100%);
+  color: #FFFFFF;
+  box-shadow: 0 0 20px rgba(239, 68, 68, 0.6);
+  transition: transform 0.25s ease;
+}
+
+.play-pulse-btn::before {
+  content: '';
+  position: absolute;
+  inset: -6px;
+  border-radius: 9999px;
+  border: 2px solid rgba(239, 68, 68, 0.6);
+  animation: playPulse 2s cubic-bezier(0.24, 0, 0.38, 1) infinite;
+}
+
+@keyframes playPulse {
+  0% {
+    transform: scale(0.9);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.45);
+    opacity: 0;
+  }
+}
+
+.press-video-card:hover .play-pulse-btn {
+  transform: scale(1.1);
+  box-shadow: 0 0 28px rgba(239, 68, 68, 0.9);
+}
+
+.media-tab-btn {
+  transition: all 0.2s ease;
+}
+
+.media-tab-btn.active {
+  background: linear-gradient(135deg, rgba(220, 38, 38, 0.9) 0%, rgba(185, 28, 28, 0.9) 100%);
+  color: #FFFFFF;
+  border-color: rgba(254, 202, 202, 0.5);
+  box-shadow: 0 0 15px rgba(239, 68, 68, 0.4);
+}
+
+.news-chyron {
+  background: linear-gradient(90deg, #991B1B 0%, #1E293B 100%);
+  border-top: 2px solid #EF4444;
+}

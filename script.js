@@ -49,6 +49,25 @@ document.addEventListener('DOMContentLoaded', () => {
   const particleCanvas = document.getElementById('particleCanvas');
   const confettiCanvas = document.getElementById('confettiCanvas');
 
+  // Video Media Modal DOM Elements
+  const videoModal = document.getElementById('videoModal');
+  const btnCloseVideoModal = document.getElementById('btnCloseVideoModal');
+  const btnMediaCenter = document.getElementById('btnMediaCenter');
+  const videoPlayerFrame = document.getElementById('videoPlayerFrame');
+  const mediaTabBtns = document.querySelectorAll('.media-tab-btn');
+  const simulatedPlayer = document.getElementById('simulatedPlayer');
+  const btnToggleSimulated = document.getElementById('btnToggleSimulated');
+  const toggleSimulatedText = document.getElementById('toggleSimulatedText');
+  const videoSourceBadge = document.getElementById('videoSourceBadge');
+  const videoDateBadge = document.getElementById('videoDateBadge');
+  const videoArticleTitle = document.getElementById('videoArticleTitle');
+  const videoKeyPoints = document.getElementById('videoKeyPoints');
+  const simChannelBadge = document.getElementById('simChannelBadge');
+  const simVideoTitle = document.getElementById('simVideoTitle');
+  const simVideoLead = document.getElementById('simVideoLead');
+  const simChyronText = document.getElementById('simChyronText');
+  const videoTriggerBtns = document.querySelectorAll('.btn-video-trigger');
+
   // ==========================================================================
   // 1. Web Audio API Sound Synthesizer (Zero External Dependencies)
   // ==========================================================================
@@ -434,6 +453,145 @@ document.addEventListener('DOMContentLoaded', () => {
     if (helpModal) helpModal.classList.add('opacity-0', 'pointer-events-none');
   }
 
+  // ==========================================================================
+  // 6. Press & News Media Video Center Controller
+  // ==========================================================================
+  const pressVideos = [
+    {
+      channelBadge: "VTV1 • BAN THỜI SỰ",
+      sourceName: "Đài Truyền hình Việt Nam (VTV1)",
+      date: "Bản tin Thời sự 19h",
+      title: "Phóng sự: Rộn ràng Ngày hội tòng quân - Thanh niên cả nước hăng hái lên đường nhập ngũ",
+      embedUrl: "https://www.youtube-nocookie.com/embed/5k99e-c_1-s?autoplay=1&rel=0",
+      chyron: "HÀNG VẠN THANH NIÊN CẢ NƯỚC BƯỚC QUA CẦU VINH QUANG THỰC HIỆN NGHĨA VỤ QUÂN SỰ VÀ CAND",
+      leadText: "Ghi nhận không khí tưng bừng, trang trọng và đầy khí thế tại các điểm giao nhận quân trên toàn quốc. Các tân binh thể hiện quyết tâm sẵn sàng cống hiến tuổi trẻ cho sự nghiệp bảo vệ vững chắc Tổ quốc Việt Nam XHCN.",
+      keyPoints: [
+        "Lễ giao nhận quân diễn ra đồng loạt trên cả nước, bảo đảm 100% chỉ tiêu quân số, nhanh gọn và an toàn tuyệt đối.",
+        "Nhiều thanh niên có trình độ đại học, cao đẳng và đảng viên trẻ tình nguyện lên đường nhập ngũ, khẳng định ý thức trách nhiệm của thế hệ mới.",
+        "Lãnh đạo Đảng, Nhà nước và Bộ Quốc phòng trực tiếp xuống các địa phương động viên, tặng quà tân binh trước giờ lên đường."
+      ]
+    },
+    {
+      channelBadge: "ANTV • TRUYỀN HÌNH CAND",
+      sourceName: "Truyền hình Công an Nhân dân (ANTV)",
+      date: "Bản tin An ninh & Pháp luật",
+      title: "Bản tin ANTV: Xử lý nghiêm minh theo Điều 332 Bộ luật Hình sự đối với hành vi trốn tránh NVQS",
+      embedUrl: "https://www.youtube-nocookie.com/embed/qg9bVZZYw9c?autoplay=1&rel=0",
+      chyron: "TÒA ÁN NHÂN DÂN XÉT XỬ LƯU ĐỘNG CÁC ĐỐI TƯỢNG TRỐN TRÁNH NGHĨA VỤ QUÂN SỰ - PHẠT TÙ ĐẾN 5 NĂM",
+      leadText: "Phản ánh các phiên tòa xét xử lưu động đối với các hành vi không chấp hành lệnh khám tuyển hoặc lệnh gọi nhập ngũ sau khi đã bị xử phạt vi phạm hành chính. Bản án thích đáng nhằm giáo dục, răn đe và giữ nghiêm kỷ cương phép nước.",
+      keyPoints: [
+        "Nghị định xử phạt vi phạm hành chính quy định phạt tiền tới 75 triệu đồng đối với hành vi không chấp hành lệnh gọi nhập ngũ.",
+        "Điều 332 Bộ luật Hình sự quy định phạt tù từ 3 tháng đến 5 năm với người tái phạm trốn tránh NVQS; bản án lưu động tạo sức răn đe mạnh mẽ.",
+        "Khẳng định nguyên tắc: Luật pháp công bằng và nghiêm minh, không có bất kỳ 'vùng cấm' hay ngoại lệ nào."
+      ]
+    },
+    {
+      channelBadge: "QPVN • KÊNH QUỐC PHÒNG",
+      sourceName: "Truyền hình Quốc phòng Việt Nam (QPVN)",
+      date: "Chuyên mục GDQP Học đường",
+      title: "Phóng sự: Đổi mới, nâng cao chất lượng giờ học Giáo dục Quốc phòng - An ninh trong trường THPT",
+      embedUrl: "https://www.youtube-nocookie.com/embed/bB3yQd2tYv0?autoplay=1&rel=0",
+      chyron: "HỌC SINH THPT HÀO HỨNG VỚI CÁC TIẾT HỌC THỰC HÀNH BẮN SÚNG TIỂU LIÊN, ĐIỀU LỆNH VÀ BĂNG BÓ CỨU THƯƠNG",
+      leadText: "Đổi mới phương pháp giảng dạy lý thuyết gắn liền với trải nghiệm thực tế quân sự tại các trường trung học phổ thông, giúp học sinh rèn luyện tính kỷ luật, tác phong nghiêm túc và tình yêu người lính Cụ Hồ.",
+      keyPoints: [
+        "Học sinh được học bài bản về truyền thống lịch sử, kỹ thuật tháo lắp súng AK, ngắm bắn và sơ cứu thương tích chiến tranh.",
+        "Môn GDQP-AN giúp học sinh rèn luyện tinh thần đồng đội, tính tự lập, kỹ năng sống và phản xạ kỷ luật tổ chức cao.",
+        "Xây dựng lòng tự hào dân tộc và chuẩn bị tâm thế sẵn sàng thực hiện nghĩa vụ thiêng liêng khi đến tuổi trưởng thành."
+      ]
+    },
+    {
+      channelBadge: "BÁO QĐND • TIỀN PHONG",
+      sourceName: "Báo Quân đội Nhân dân & Báo Tiền Phong",
+      date: "Phóng sự Tuổi trẻ Xung kích",
+      title: "Phóng sự: Lan tỏa những lá đơn tình nguyện tòng quân của nữ sinh và thanh niên trẻ",
+      embedUrl: "https://www.youtube-nocookie.com/embed/pC8cOwhB3r4?autoplay=1&rel=0",
+      chyron: "HÀNG NGHÌN LÁ ĐƠN VIẾT BẰNG TAY XIN TÌNH NGUYỆN GIA NHẬP QUÂN ĐỘI VÀ CÔNG AN NHÂN DÂN",
+      leadText: "Hình ảnh những cô gái vừa tốt nghiệp đại học hay các chàng trai trẻ gác lại công việc với thu nhập hấp dẫn để viết đơn tình nguyện nhập ngũ, lan tỏa tinh thần xung phong bất khuất của thanh niên Việt Nam.",
+      keyPoints: [
+        "Nhiều nữ tú tài, cử nhân tình nguyện tòng quân, sẵn sàng trải nghiệm và cống hiến tại các đơn vị quân đội, công an.",
+        "Các bạn trẻ khẳng định: 2 năm phục vụ tại ngũ là môi trường rèn luyện vô giá để trưởng thành, tích lũy bản lĩnh sống vững vàng.",
+        "Tấm gương sáng truyền cảm hứng mạnh mẽ tới bạn bè đồng trang lứa và học sinh THPT trên khắp cả nước."
+      ]
+    }
+  ];
+
+  let currentVideoTab = 0;
+  let isSimulatedMode = false;
+
+  function updateVideoModalContent() {
+    const item = pressVideos[currentVideoTab];
+    if (!item) return;
+
+    if (videoSourceBadge) videoSourceBadge.textContent = item.sourceName;
+    if (videoDateBadge) videoDateBadge.innerHTML = `<i class="fa-regular fa-calendar-days mr-1"></i>${item.date}`;
+    if (videoArticleTitle) videoArticleTitle.textContent = item.title;
+
+    if (simChannelBadge) simChannelBadge.textContent = item.channelBadge;
+    if (simVideoTitle) simVideoTitle.textContent = item.title;
+    if (simVideoLead) simVideoLead.textContent = item.leadText;
+    if (simChyronText) simChyronText.textContent = item.chyron;
+
+    if (videoKeyPoints) {
+      videoKeyPoints.innerHTML = item.keyPoints.map(pt => 
+        `<li class="flex items-start gap-2">
+          <i class="fa-solid fa-circle-check text-red-400 mt-1 text-xs shrink-0"></i>
+          <span>${pt}</span>
+        </li>`
+      ).join('');
+    }
+
+    if (!isSimulatedMode) {
+      if (videoPlayerFrame) videoPlayerFrame.src = item.embedUrl;
+      if (simulatedPlayer) simulatedPlayer.classList.add('hidden');
+      if (videoPlayerFrame) videoPlayerFrame.classList.remove('hidden');
+    } else {
+      if (videoPlayerFrame) videoPlayerFrame.src = "";
+      if (videoPlayerFrame) videoPlayerFrame.classList.add('hidden');
+      if (simulatedPlayer) simulatedPlayer.classList.remove('hidden');
+    }
+
+    mediaTabBtns.forEach((btn, idx) => {
+      if (idx === currentVideoTab) {
+        btn.classList.add('active', 'text-white');
+        btn.classList.remove('text-slate-300');
+      } else {
+        btn.classList.remove('active', 'text-white');
+        btn.classList.add('text-slate-300');
+      }
+    });
+  }
+
+  function openVideoModal(tabIndex = 0) {
+    playClickSound();
+    currentVideoTab = Math.max(0, Math.min(tabIndex, pressVideos.length - 1));
+    updateVideoModalContent();
+    if (videoModal) videoModal.classList.remove('opacity-0', 'pointer-events-none');
+  }
+
+  function closeVideoModal() {
+    playClickSound();
+    if (videoModal) videoModal.classList.add('opacity-0', 'pointer-events-none');
+    if (videoPlayerFrame) videoPlayerFrame.src = ""; // Dừng phát video lập tức
+  }
+
+  function switchVideoTab(index) {
+    playClickSound();
+    currentVideoTab = index;
+    updateVideoModalContent();
+  }
+
+  function toggleSimulatedMode() {
+    playClickSound();
+    isSimulatedMode = !isSimulatedMode;
+    if (toggleSimulatedText) {
+      toggleSimulatedText.textContent = isSimulatedMode ? 'Xem video YouTube' : 'Xem tóm tắt bản tin';
+    }
+    updateVideoModalContent();
+  }
+
+  window.openVideoModal = openVideoModal;
+  window.closeVideoModal = closeVideoModal;
+
   function toggleFullscreen() {
     playClickSound();
     if (!document.fullscreenElement) {
@@ -461,8 +619,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (presentationContainer) {
     presentationContainer.addEventListener('click', (e) => {
-      // Bỏ qua nếu click trúng nút bấm, liên kết, thanh điều khiển, header hoặc modal
-      if (e.target.closest('button') || e.target.closest('a') || e.target.closest('nav') || e.target.closest('header') || e.target.closest('#overviewModal') || e.target.closest('#helpModal')) {
+      // Bỏ qua nếu click trúng nút bấm, liên kết, thanh điều khiển, header, thẻ video hoặc modal
+      if (e.target.closest('button') || 
+          e.target.closest('a') || 
+          e.target.closest('nav') || 
+          e.target.closest('header') || 
+          e.target.closest('#overviewModal') || 
+          e.target.closest('#helpModal') || 
+          e.target.closest('#videoModal') ||
+          e.target.closest('.press-video-card') ||
+          e.target.closest('.btn-video-trigger')) {
         return;
       }
 
@@ -483,12 +649,14 @@ document.addEventListener('DOMContentLoaded', () => {
     if (e.key === 'Escape') {
       closeOverviewModal();
       closeHelpModal();
+      closeVideoModal();
       return;
     }
 
     const isOverviewOpen = overviewModal && !overviewModal.classList.contains('pointer-events-none');
     const isHelpOpen = helpModal && !helpModal.classList.contains('pointer-events-none');
-    if (isOverviewOpen || isHelpOpen) return;
+    const isVideoOpen = videoModal && !videoModal.classList.contains('pointer-events-none');
+    if (isOverviewOpen || isHelpOpen || isVideoOpen) return;
 
     switch(e.key) {
       case 'ArrowRight':
@@ -518,6 +686,11 @@ document.addEventListener('DOMContentLoaded', () => {
       case 'S':
         e.preventDefault();
         toggleSound();
+        break;
+      case 'v':
+      case 'V':
+        e.preventDefault();
+        openVideoModal(0);
         break;
       case '?':
       case '/':
@@ -559,6 +732,31 @@ document.addEventListener('DOMContentLoaded', () => {
   if (btnFullscreen) btnFullscreen.addEventListener('click', toggleFullscreen);
   if (btnAutoplay) btnAutoplay.addEventListener('click', toggleAutoplay);
   if (btnSound) btnSound.addEventListener('click', toggleSound);
+
+  // Video Media Center Listeners
+  if (btnMediaCenter) btnMediaCenter.addEventListener('click', (e) => { e.stopPropagation(); openVideoModal(0); });
+  if (btnCloseVideoModal) btnCloseVideoModal.addEventListener('click', (e) => { e.stopPropagation(); closeVideoModal(); });
+  if (videoModal) {
+    videoModal.addEventListener('click', (e) => {
+      if (e.target === videoModal) closeVideoModal();
+    });
+  }
+  mediaTabBtns.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const tabIdx = parseInt(btn.dataset.tab || '0');
+      switchVideoTab(tabIdx);
+    });
+  });
+  if (btnToggleSimulated) btnToggleSimulated.addEventListener('click', (e) => { e.stopPropagation(); toggleSimulatedMode(); });
+
+  videoTriggerBtns.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const tabIdx = parseInt(btn.dataset.videoIndex || '0');
+      openVideoModal(tabIdx);
+    });
+  });
 
   // Initial Setup
   createDots();
