@@ -461,10 +461,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (presentationContainer) {
     presentationContainer.addEventListener('click', (e) => {
-      if (e.target.closest('button') || e.target.closest('a') || e.target.closest('nav') || e.target.closest('header')) {
+      // Bỏ qua nếu click trúng nút bấm, liên kết, thanh điều khiển, header hoặc modal
+      if (e.target.closest('button') || e.target.closest('a') || e.target.closest('nav') || e.target.closest('header') || e.target.closest('#overviewModal') || e.target.closest('#helpModal')) {
         return;
       }
-      nextSlide();
+
+      // Xác định tọa độ click: nửa trái hay nửa phải màn hình
+      const rect = presentationContainer.getBoundingClientRect();
+      const clickX = e.clientX - rect.left;
+      const middleX = rect.width / 2;
+
+      if (clickX < middleX) {
+        prevSlide();
+      } else {
+        nextSlide();
+      }
     });
   }
 

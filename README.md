@@ -57,7 +57,8 @@ Người thuyết trình có thể điều khiển bài giảng hoàn toàn bằ
 | :--- | :--- |
 | **`Phím Phải →` / `Space` / `PageDown`** | Tiến sang slide tiếp theo |
 | **`Phím Trái ←` / `PageUp`** | Lùi về slide trước đó |
-| **Click Chuột Trái** | Click bất kỳ vào màn hình để tiến slide |
+| **Click Nửa Trái Màn Hình** | Lùi về slide trước đó (Trang trước) |
+| **Click Nửa Phải Màn Hình** | Tiến sang slide tiếp theo (Trang tiếp) |
 | **`F`** | Bật / Tắt chế độ **Toàn màn hình** (Fullscreen) |
 | **`M` hoặc `O`** | Mở **Mục lục dạng lưới** để chuyển nhanh đến slide bất kỳ |
 | **`A`** | Bật / Tắt chế độ **Tự động trình chiếu** (7 giây / slide) |
