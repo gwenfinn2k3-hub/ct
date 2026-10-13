@@ -79,6 +79,10 @@
       <i class="fa-solid fa-expand text-sm"></i>
     </button>
     <div class="w-px h-4 bg-slate-700/80"></div>
+    <button id="btnSound" class="p-1.5 w-7 h-7 flex items-center justify-center rounded-full hover:bg-slate-800 text-slate-300 hover:text-amber-400 transition" title="Bật/Tắt âm thanh hiệu ứng (Phím S)">
+      <i id="soundIcon" class="fa-solid fa-volume-high text-xs"></i>
+    </button>
+    <div class="w-px h-4 bg-slate-700/80"></div>
     <button id="btnHelp" class="p-1.5 w-7 h-7 flex items-center justify-center rounded-full hover:bg-slate-800 text-slate-300 hover:text-amber-400 transition" title="Phím tắt trợ giúp (?)">
       <i class="fa-solid fa-circle-question text-sm"></i>
     </button>
@@ -96,6 +100,14 @@
 
   <!-- MAIN PRESENTATION CONTAINER (16:9 ASPECT CANVAS) -->
   <main id="presentationContainer" class="aspect-canvas relative overflow-hidden shadow-2xl border border-slate-800/80 rounded-none md:rounded-xl">
+    <!-- Interactive Background Particle Canvas (Heroic Embers) -->
+    <canvas id="particleCanvas" class="absolute inset-0 pointer-events-none z-0"></canvas>
+    
+    <!-- Celebration Victory Confetti Canvas (Triggered on Slide 10) -->
+    <canvas id="confettiCanvas" class="absolute inset-0 pointer-events-none z-30"></canvas>
+    
+    <!-- Dynamic Ambient Cursor Torch -->
+    <div id="cursorTorch" class="absolute pointer-events-none w-96 h-96 -translate-x-1/2 -translate-y-1/2 rounded-full opacity-35 blur-3xl z-0 transition-opacity duration-300" style="background: radial-gradient(circle, rgba(245, 158, 11, 0.16) 0%, rgba(218, 37, 29, 0.08) 40%, transparent 70%);"></div>
 
     <!-- ==================== SLIDE 1: COVER ==================== -->
     <section class="slide active pt-14 pb-14 px-6 sm:px-10 md:px-14 flex flex-col justify-between overflow-hidden" data-slide="1">
@@ -930,6 +942,10 @@
         <div class="flex items-center justify-between p-2 rounded bg-slate-800/60">
           <span>Bật / Tắt Toàn màn hình:</span>
           <span class="font-mono bg-slate-700 px-2 py-0.5 rounded text-amber-300 font-bold">Phím F</span>
+        </div>
+        <div class="flex items-center justify-between p-2 rounded bg-slate-800/60">
+          <span>Bật / Tắt Âm thanh tương tác:</span>
+          <span class="font-mono bg-slate-700 px-2 py-0.5 rounded text-amber-300 font-bold">Phím S</span>
         </div>
         <div class="flex items-center justify-between p-2 rounded bg-slate-800/60">
           <span>Bật / Tắt Tự động trình chiếu:</span>
