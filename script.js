@@ -115,7 +115,7 @@ document.addEventListener('DOMContentLoaded', () => {
       dots.forEach((dot, idx) => {
         const i = idx + 1;
         if (i === currentSlide) {
-          dot.className = 'w-5 h-2 rounded-full bg-amber-400 transition-all duration-300';
+          dot.className = 'w-5 h-2 rounded-full bg-amber-400 dot-active transition-all duration-300';
         } else {
           dot.className = 'w-2 h-2 rounded-full bg-slate-600 hover:bg-slate-400 transition-all duration-300';
         }
