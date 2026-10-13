@@ -1,704 +1,332 @@
-/**
- * =====================================================================
- * BÀI 1: BẢO VỆ CHỦ QUYỀN LÃNH THỔ, BIÊN GIỚI QUỐC GIA VIỆT NAM
- * Presentation Controller (GSAP + Stagger + Swipe + Fullscreen + State)
- * =====================================================================
- */
-
-(function () {
-  'use strict';
-
-  // --- 1. DOM REFERENCES & STATE ---
-  const deck = document.getElementById('deck');
-  const slides = Array.from(document.querySelectorAll('.slide'));
-  const totalSlides = slides.length;
-  let currentIndex = 0;
-  let isAnimating = false;
-  let hasGSAP = typeof window.gsap !== 'undefined';
-
-  if (!hasGSAP) {
-    document.body.classList.add('no-gsap');
-  }
-
-  // Chrome elements
-  const progressBar = document.getElementById('progress-bar');
-  const counterCurrent = document.getElementById('counter-current');
-  const counterTotal = document.getElementById('counter-total');
-  const btnPrev = document.getElementById('btn-prev');
-  const btnNext = document.getElementById('btn-next');
-  const btnFullscreen = document.getElementById('btn-fullscreen');
-  const paginationDotsContainer = document.getElementById('pagination-dots');
-  const liveRegion = document.getElementById('live-region');
-  const btnStart = document.getElementById('btn-start');
-  const btnRestart = document.getElementById('btn-restart');
-  const btnOverview = document.getElementById('btn-overview');
-  const btnOpenOverview = document.getElementById('btn-open-overview');
-  const overviewModal = document.getElementById('overview');
-  const overviewGrid = document.getElementById('overview-grid');
-  const btnOverviewClose = document.getElementById('btn-overview-close');
-
-  if (counterTotal) {
-    counterTotal.textContent = String(totalSlides).padStart(2, '0');
-  }
-
-  // --- 2. BUILD PAGINATION & OVERVIEW ITEMS ---
-  function buildNavigationUI() {
-    // Pagination dots
-    if (paginationDotsContainer) {
-      paginationDotsContainer.innerHTML = '';
-      slides.forEach((slide, idx) => {
-        const dot = document.createElement('button');
-        dot.className = 'dot' + (idx === 0 ? ' is-active' : '');
-        dot.type = 'button';
-        dot.setAttribute('aria-label', `Chuyển tới slide ${idx + 1}: ${slide.dataset.title || ''}`);
-        
-        const tip = document.createElement('span');
-        tip.className = 'dot__tip';
-        tip.innerHTML = `<b>${String(idx + 1).padStart(2, '0')}</b>${slide.dataset.title || ''}`;
-        dot.appendChild(tip);
-
-        dot.addEventListener('click', () => {
-          goToSlide(idx);
-        });
-        paginationDotsContainer.appendChild(dot);
-      });
-    }
-
-    // Overview modal items
-    if (overviewGrid) {
-      overviewGrid.innerHTML = '';
-      slides.forEach((slide, idx) => {
-        const item = document.createElement('button');
-        item.className = 'ov-item' + (idx === 0 ? ' is-current' : '');
-        item.type = 'button';
-        const iconClass = slide.dataset.icon || 'fa-file-lines';
-        item.innerHTML = `
-          <span class="ov-item__num">${String(idx + 1).padStart(2, '0')}</span>
-          <span class="ov-item__title">
-            <small><i class="fa-solid ${iconClass}"></i>Slide ${idx + 1}</small>
-            <strong>${slide.dataset.title || 'Nội dung bài'}</strong>
-          </span>
-        `;
-        item.addEventListener('click', () => {
-          closeOverview();
-          goToSlide(idx);
-        });
-        overviewGrid.appendChild(item);
-      });
-    }
-  }
-
-  // --- 3. ANIMATION ENGINE (GSAP / CSS FALLBACK) ---
-  function animateSlideContent(slideElement, direction = 1) {
-    if (!hasGSAP) {
-      slideElement.classList.add('animate');
-      const animItems = slideElement.querySelectorAll('[data-anim]');
-      animItems.forEach((el, i) => {
-        el.style.setProperty('--i', i);
-      });
-      return;
-    }
-
-    // Animate via GSAP
-    const animEls = slideElement.querySelectorAll('[data-anim]');
-    const mediaEl = slideElement.querySelector('[data-anim="media"]');
-    const lineX = slideElement.querySelector('[data-anim="lineX"]');
-    const burst = slideElement.querySelector('.burst');
-
-    // Reset initial styles for animatable children
-    gsap.killTweensOf(animEls);
-    if (mediaEl) gsap.killTweensOf(mediaEl);
-    if (lineX) gsap.killTweensOf(lineX);
-
-    // Stagger in content elements
-    const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
-
-    // Stagger slide text/cards
-    if (animEls.length > 0) {
-      tl.fromTo(
-        animEls,
-        {
-          opacity: 0,
-          y: 24,
-          scale: 0.99
-        },
-        {
-          opacity: 1,
-          y: 0,
-          scale: 1,
-          duration: 0.65,
-          stagger: 0.07,
-          clearProps: 'transform,scale'
-        },
-        0.05
-      );
-    }
-
-    // Media element cinematic reveal
-    if (mediaEl) {
-      tl.fromTo(
-        mediaEl,
-        {
-          opacity: 0,
-          scale: 1.04,
-          x: direction >= 0 ? 25 : -25
-        },
-        {
-          opacity: 1,
-          scale: 1,
-          x: 0,
-          duration: 0.85,
-          ease: 'power2.out',
-          clearProps: 'transform'
-        },
-        0.1
-      );
-    }
-
-    // Special timeline line animation on Slide 9
-    if (lineX) {
-      tl.fromTo(
-        lineX,
-        { scaleX: 0, opacity: 0 },
-        { scaleX: 1, opacity: 1, duration: 0.85, ease: 'power2.out' },
-        0.2
-      );
-    }
-
-    // Special finale fireworks / stars burst on Slide 14
-    if (burst && !burst.hasChildNodes()) {
-      for (let i = 0; i < 16; i++) {
-        const star = document.createElement('i');
-        star.className = 'fa-solid fa-star';
-        burst.appendChild(star);
-        const angle = (i / 16) * Math.PI * 2;
-        const dist = 60 + Math.random() * 80;
-        gsap.fromTo(
-          star,
-          { x: 0, y: 0, opacity: 1, scale: 0.5 },
-          {
-            x: Math.cos(angle) * dist,
-            y: Math.sin(angle) * dist,
-            opacity: 0,
-            scale: 1.4,
-            duration: 1.4 + Math.random() * 0.8,
-            ease: 'power2.out',
-            repeat: -1,
-            repeatDelay: 2
+/* ==========================================================================
+   Tailwind CSS Configuration & Custom Presets
+   ========================================================================== */
+window.tailwind = window.tailwind || {};
+tailwind.config = {
+    darkMode: 'class',
+    theme: {
+      extend: {
+        colors: {
+          flag: {
+            red: '#DA251D',
+            deep: '#9B111E',
+            dark: '#58080E',
+            gold: '#FFFF00',
+            amber: '#FFB800',
+            bronze: '#C59A3F'
+          },
+          military: {
+            army: '#1E3A2F',
+            darkArmy: '#0F231B',
+            police: '#0A2540',
+            deepBlue: '#061628',
+            accent: '#225740'
           }
-        );
+        },
+        fontFamily: {
+          sans: ['"Be Vietnam Pro"', 'sans-serif'],
+        },
+        boxShadow: {
+          'glow-red': '0 0 35px -5px rgba(218, 37, 29, 0.45)',
+          'glow-gold': '0 0 30px -5px rgba(255, 184, 0, 0.35)',
+          'glow-blue': '0 0 30px -5px rgba(10, 37, 64, 0.45)',
+        }
       }
     }
+  };
+}
+
+/* ==========================================================================
+   Interactive Presentation Deck Controller
+   ========================================================================== */
+document.addEventListener('DOMContentLoaded', () => {
+  // State Variables
+  let currentSlide = 1;
+  const totalSlides = 10;
+  let autoplayTimer = null;
+  let isAutoplay = false;
+  const AUTOPLAY_INTERVAL = 7000; // 7 seconds per slide
+
+  // Titles for Overview Modal
+  const slideTitles = [
+    "Trang Bìa: Trách Nhiệm NVQS & CAND",
+    "Khái Quát Hai Nhóm Trách Nhiệm",
+    "Công Dân: Đăng Ký Nghĩa Vụ Đúng Hạn",
+    "Công Dân: Chấp Hành Khám Tuyển & Nhập Ngũ",
+    "Công Dân: Tuyên Truyền & Vận Động",
+    "Công Dân: Đấu Tranh Chống Tiêu Cực",
+    "Học Sinh: Ý Thức & Học Tập GDQP-AN",
+    "Học Sinh: Xung Kích Hoạt Động Phong Trào",
+    "Học Sinh: Đấu Tranh Nhận Thức Sai Lệch",
+    "Tổng Kết & Thông Điệp Tuổi Trẻ"
+  ];
+
+  // DOM Elements
+  const slides = document.querySelectorAll('.slide');
+  const progressBar = document.getElementById('progressBar');
+  const slideIndicator = document.getElementById('slideIndicator');
+  const btnPrev = document.getElementById('btnPrev');
+  const btnNext = document.getElementById('btnNext');
+  const dotIndicators = document.getElementById('dotIndicators');
+  const btnOverview = document.getElementById('btnOverview');
+  const overviewModal = document.getElementById('overviewModal');
+  const btnCloseOverview = document.getElementById('btnCloseOverview');
+  const overviewGrid = document.getElementById('overviewGrid');
+  const btnFullscreen = document.getElementById('btnFullscreen');
+  const btnHelp = document.getElementById('btnHelp');
+  const helpModal = document.getElementById('helpModal');
+  const btnCloseHelp = document.getElementById('btnCloseHelp');
+  const btnAutoplay = document.getElementById('btnAutoplay');
+  const autoplayIcon = document.getElementById('autoplayIcon');
+  const autoplayText = document.getElementById('autoplayText');
+  const presentationContainer = document.getElementById('presentationContainer');
+
+  // Init Dot Indicators
+  function createDots() {
+    if (!dotIndicators) return;
+    dotIndicators.innerHTML = '';
+    for (let i = 1; i <= totalSlides; i++) {
+      const dot = document.createElement('button');
+      dot.className = `w-2 h-2 rounded-full transition-all duration-300 ${i === currentSlide ? 'w-5 bg-amber-400' : 'bg-slate-600 hover:bg-slate-400'}`;
+      dot.title = `Chuyển tới slide ${i}: ${slideTitles[i-1]}`;
+      dot.addEventListener('click', (e) => {
+        e.stopPropagation();
+        goToSlide(i);
+      });
+      dotIndicators.appendChild(dot);
+    }
   }
 
-  // --- 4. SLIDE NAVIGATION TRANSITIONS ---
-  function updateChrome(index) {
-    const slide = slides[index];
-    const theme = slide.dataset.theme || 'red';
-    document.body.setAttribute('data-theme', theme);
+  // Init Overview Modal Grid
+  function createOverviewGrid() {
+    if (!overviewGrid) return;
+    overviewGrid.innerHTML = '';
+    for (let i = 1; i <= totalSlides; i++) {
+      const card = document.createElement('div');
+      const isActive = i === currentSlide;
+      card.className = `p-3 rounded-xl border text-left cursor-pointer transition flex flex-col justify-between h-28 ${isActive ? 'bg-amber-950/60 border-amber-500 shadow-glow-gold' : 'bg-slate-800/60 border-slate-700/80 hover:border-slate-500'}`;
+      card.innerHTML = `
+        <div class="flex items-center justify-between">
+          <span class="text-[11px] font-mono font-bold ${isActive ? 'text-amber-400' : 'text-slate-400'}">Slide ${String(i).padStart(2, '0')}</span>
+          ${isActive ? '<i class="fa-solid fa-circle-check text-xs text-amber-400"></i>' : ''}
+        </div>
+        <div class="text-xs font-semibold text-white line-clamp-2">${slideTitles[i-1]}</div>
+        <div class="text-[10px] text-slate-400">Nhấn để xem</div>
+      `;
+      card.addEventListener('click', () => {
+        goToSlide(i);
+        closeOverviewModal();
+      });
+      overviewGrid.appendChild(card);
+    }
+  }
+
+  // Update Slide View
+  function updateSlideView() {
+    slides.forEach((slide, idx) => {
+      const slideIndex = idx + 1;
+      if (slideIndex === currentSlide) {
+        slide.classList.add('active');
+      } else {
+        slide.classList.remove('active');
+      }
+    });
 
     // Update Progress Bar
     if (progressBar) {
-      const pct = ((index + 1) / totalSlides) * 100;
-      progressBar.style.width = pct + '%';
-      const progressWrap = document.getElementById('progress');
-      if (progressWrap) progressWrap.setAttribute('aria-valuenow', index + 1);
+      const percentage = (currentSlide / totalSlides) * 100;
+      progressBar.style.width = `${percentage}%`;
     }
 
-    // Update Counter
-    if (counterCurrent) {
-      counterCurrent.textContent = String(index + 1).padStart(2, '0');
+    // Update Text Indicator
+    if (slideIndicator) {
+      slideIndicator.textContent = `${String(currentSlide).padStart(2, '0')} / ${String(totalSlides).padStart(2, '0')}`;
     }
 
-    // Update Prev / Next buttons
-    if (btnPrev) btnPrev.disabled = index === 0;
-    if (btnNext) {
-      btnNext.disabled = index === totalSlides - 1;
-      const nextSpan = btnNext.querySelector('span');
-      if (nextSpan) {
-        nextSpan.textContent = index === totalSlides - 2 ? 'Tổng kết' : 'Tiếp theo';
-      }
-    }
+    // Update Navigation Buttons State
+    if (btnPrev) btnPrev.disabled = currentSlide === 1;
+    if (btnNext) btnNext.disabled = currentSlide === totalSlides;
 
-    // Update Pagination Dots
-    if (paginationDotsContainer) {
-      const dots = paginationDotsContainer.querySelectorAll('.dot');
+    // Update Dots
+    if (dotIndicators) {
+      const dots = dotIndicators.querySelectorAll('button');
       dots.forEach((dot, idx) => {
-        dot.classList.toggle('is-active', idx === index);
-        if (idx < index) {
-          dot.classList.add('is-visited');
+        const i = idx + 1;
+        if (i === currentSlide) {
+          dot.className = 'w-5 h-2 rounded-full bg-amber-400 transition-all duration-300';
         } else {
-          dot.classList.remove('is-visited');
+          dot.className = 'w-2 h-2 rounded-full bg-slate-600 hover:bg-slate-400 transition-all duration-300';
         }
       });
     }
 
-    // Update Overview modal highlights
-    if (overviewGrid) {
-      const items = overviewGrid.querySelectorAll('.ov-item');
-      items.forEach((item, idx) => {
-        item.classList.toggle('is-current', idx === index);
-      });
-    }
-
-    // Screen reader announcement
-    if (liveRegion) {
-      liveRegion.textContent = `Đang ở slide ${index + 1} trên ${totalSlides}: ${slide.dataset.title || ''}`;
-    }
-
-    // Hash sync
-    history.replaceState(null, '', `#/${index + 1}`);
+    // Re-create overview active styling
+    createOverviewGrid();
   }
 
-  function goToSlide(targetIndex) {
-    if (targetIndex < 0 || targetIndex >= totalSlides || targetIndex === currentIndex || isAnimating) {
-      return;
-    }
-
-    const direction = targetIndex > currentIndex ? 1 : -1;
-    const currentSlide = slides[currentIndex];
-    const nextSlide = slides[targetIndex];
-
-    isAnimating = true;
-
-    if (hasGSAP) {
-      // Chuẩn Apple Keynote: Chuyển cảnh ngang mượt mà, chiều sâu 3D tinh tế không lag
-      const tl = gsap.timeline({
-        defaults: { ease: 'power3.out' },
-        onComplete: () => {
-          currentSlide.classList.remove('is-active');
-          nextSlide.classList.add('is-active');
-          gsap.set([currentSlide, nextSlide], { clearProps: 'all' });
-          currentIndex = targetIndex;
-          updateChrome(currentIndex);
-          animateSlideContent(nextSlide, direction);
-          isAnimating = false;
-        }
-      });
-
-      // Slide cũ: Trượt nhẹ sang bên ngược lại, scale nhẹ lùi về sau và mờ dần
-      tl.to(
-        currentSlide,
-        {
-          xPercent: direction * -35,
-          scale: 0.94,
-          opacity: 0,
-          duration: 0.6,
-          ease: 'power2.inOut'
-        },
-        0
-      );
-
-      // Slide mới: Tiến vào từ hướng di chuyển, xuất hiện thanh thoát
-      tl.fromTo(
-        nextSlide,
-        {
-          visibility: 'visible',
-          xPercent: direction * 45,
-          scale: 0.98,
-          opacity: 0
-        },
-        {
-          xPercent: 0,
-          scale: 1,
-          opacity: 1,
-          duration: 0.65,
-          ease: 'power3.out'
-        },
-        0.12
-      );
-    } else {
-      currentSlide.classList.remove('is-active');
-      currentSlide.classList.remove('animate');
-      nextSlide.classList.add('is-active');
-      currentIndex = targetIndex;
-      updateChrome(currentIndex);
-      animateSlideContent(nextSlide, direction);
-      setTimeout(() => {
-        isAnimating = false;
-      }, 500);
-    }
+  // Navigation Actions
+  function goToSlide(slideNum) {
+    if (slideNum < 1 || slideNum > totalSlides) return;
+    currentSlide = slideNum;
+    updateSlideView();
   }
 
   function nextSlide() {
-    if (currentIndex < totalSlides - 1) {
-      goToSlide(currentIndex + 1);
+    if (currentSlide < totalSlides) {
+      currentSlide++;
+      updateSlideView();
+    } else if (isAutoplay) {
+      // Loop back to first slide when autoplay reaches end
+      currentSlide = 1;
+      updateSlideView();
     }
   }
 
   function prevSlide() {
-    if (currentIndex > 0) {
-      goToSlide(currentIndex - 1);
+    if (currentSlide > 1) {
+      currentSlide--;
+      updateSlideView();
     }
   }
 
-  // --- 5. INTERACTIVE WIDGETS ---
-  // Slide 5: Territory Tabs
-  function initTerritoryWidget() {
-    const tabs = document.querySelectorAll('.terr-tab');
-    const details = document.querySelectorAll('.terr-detail');
+  // Expose navigation functions to global scope for any inline onclick handlers
+  window.goToSlide = goToSlide;
+  window.nextSlide = nextSlide;
+  window.prevSlide = prevSlide;
 
-    tabs.forEach((tab) => {
-      tab.addEventListener('click', () => {
-        const key = tab.dataset.key;
-        tabs.forEach((t) => {
-          const isActive = t === tab;
-          t.classList.toggle('is-active', isActive);
-          t.setAttribute('aria-selected', isActive ? 'true' : 'false');
-        });
-        details.forEach((det) => {
-          det.classList.toggle('is-active', det.dataset.key === key);
-        });
-      });
-    });
+  // Modal Control Functions
+  function openOverviewModal() {
+    if (overviewModal) overviewModal.classList.remove('opacity-0', 'pointer-events-none');
+  }
+  function closeOverviewModal() {
+    if (overviewModal) overviewModal.classList.add('opacity-0', 'pointer-events-none');
+  }
+  function openHelpModal() {
+    if (helpModal) helpModal.classList.remove('opacity-0', 'pointer-events-none');
+  }
+  function closeHelpModal() {
+    if (helpModal) helpModal.classList.add('opacity-0', 'pointer-events-none');
   }
 
-  // Slide 11: Sea Zones Interactive Diagram
-  function initSeaMapWidget() {
-    const seaMap = document.getElementById('sea-map');
-    const zoneButtons = document.querySelectorAll('#zone-list .zl-item');
-    const bands = document.querySelectorAll('.sea-map .band, .shelf-label');
-
-    function setActiveZone(zoneId) {
-      if (!seaMap) return;
-      if (!zoneId) {
-        seaMap.removeAttribute('data-active');
-        bands.forEach((b) => b.classList.remove('is-active'));
-        zoneButtons.forEach((btn) => btn.classList.remove('is-active'));
-        return;
-      }
-      seaMap.setAttribute('data-active', zoneId);
-      bands.forEach((b) => {
-        b.classList.toggle('is-active', b.dataset.zone === String(zoneId));
-      });
-      zoneButtons.forEach((btn) => {
-        btn.classList.toggle('is-active', btn.dataset.zone === String(zoneId));
-      });
-    }
-
-    zoneButtons.forEach((btn) => {
-      btn.addEventListener('mouseenter', () => setActiveZone(btn.dataset.zone));
-      btn.addEventListener('focus', () => setActiveZone(btn.dataset.zone));
-      btn.addEventListener('mouseleave', () => setActiveZone(null));
-      btn.addEventListener('blur', () => setActiveZone(null));
-    });
-
-    bands.forEach((band) => {
-      band.addEventListener('mouseenter', () => setActiveZone(band.dataset.zone));
-      band.addEventListener('mouseleave', () => setActiveZone(null));
-      band.addEventListener('click', () => {
-        setActiveZone(band.dataset.zone);
-      });
-    });
-  }
-
-  // Spotlight Cursor Tracking
-  function initSpotlightEffect() {
-    const spots = document.querySelectorAll('.spot');
-    spots.forEach((card) => {
-      card.addEventListener('mousemove', (e) => {
-        const rect = card.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        card.style.setProperty('--mx', `${x}px`);
-        card.style.setProperty('--my', `${y}px`);
-      });
-    });
-  }
-
-  // Particle Background
-  function initParticles() {
-    const canvas = document.getElementById('particles');
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    let width, height;
-    let particles = [];
-
-    function resize() {
-      width = canvas.width = window.innerWidth;
-      height = canvas.height = window.innerHeight;
-    }
-    resize();
-    window.addEventListener('resize', resize);
-
-    const count = Math.min(45, Math.floor((width * height) / 32000));
-    for (let i = 0; i < count; i++) {
-      particles.push({
-        x: Math.random() * width,
-        y: Math.random() * height,
-        r: Math.random() * 2 + 0.6,
-        vx: (Math.random() - 0.5) * 0.35,
-        vy: -0.2 - Math.random() * 0.45,
-        alpha: Math.random() * 0.5 + 0.2,
-        gold: Math.random() > 0.4
-      });
-    }
-
-    function render() {
-      ctx.clearRect(0, 0, width, height);
-      for (let p of particles) {
-        p.x += p.vx;
-        p.y += p.vy;
-        if (p.y < -10) {
-          p.y = height + 10;
-          p.x = Math.random() * width;
-        }
-        if (p.x < -10) p.x = width + 10;
-        if (p.x > width + 10) p.x = -10;
-
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fillStyle = p.gold
-          ? `rgba(255, 205, 2, ${p.alpha * 0.7})`
-          : `rgba(218, 37, 29, ${p.alpha * 0.5})`;
-        ctx.fill();
-      }
-      requestAnimationFrame(render);
-    }
-    requestAnimationFrame(render);
-  }
-
-  // --- 6. FULLSCREEN & OVERVIEW MODAL ---
+  // Fullscreen Toggle
   function toggleFullscreen() {
     if (!document.fullscreenElement) {
-      document.documentElement.requestFullscreen().catch(() => {});
+      document.documentElement.requestFullscreen().catch(err => console.log(err));
     } else {
       if (document.exitFullscreen) {
-        document.exitFullscreen().catch(() => {});
+        document.exitFullscreen();
       }
     }
   }
 
-  function updateFullscreenIcon() {
-    if (!btnFullscreen) return;
-    const icon = btnFullscreen.querySelector('i');
-    if (!icon) return;
-    if (document.fullscreenElement) {
-      icon.className = 'fa-solid fa-compress';
-      btnFullscreen.setAttribute('title', 'Thoát toàn màn hình (F)');
+  // Autoplay Toggle
+  function toggleAutoplay() {
+    isAutoplay = !isAutoplay;
+    if (isAutoplay) {
+      if (autoplayIcon) autoplayIcon.className = 'fa-solid fa-pause text-sm';
+      if (autoplayText) autoplayText.textContent = 'Tạm dừng';
+      if (btnAutoplay) btnAutoplay.classList.add('text-emerald-400');
+      autoplayTimer = setInterval(nextSlide, AUTOPLAY_INTERVAL);
     } else {
-      icon.className = 'fa-solid fa-expand';
-      btnFullscreen.setAttribute('title', 'Toàn màn hình (F)');
+      if (autoplayIcon) autoplayIcon.className = 'fa-solid fa-play text-sm';
+      if (autoplayText) autoplayText.textContent = 'Tự chạy';
+      if (btnAutoplay) btnAutoplay.classList.remove('text-emerald-400');
+      clearInterval(autoplayTimer);
     }
   }
 
-  document.addEventListener('fullscreenchange', updateFullscreenIcon);
-
-  function openOverview() {
-    if (!overviewModal) return;
-    overviewModal.classList.add('is-open');
-    overviewModal.setAttribute('aria-hidden', 'false');
+  // Click on canvas advances slide (unless clicking an interactive element)
+  if (presentationContainer) {
+    presentationContainer.addEventListener('click', (e) => {
+      // Ignore click if user clicked button, link or modal
+      if (e.target.closest('button') || e.target.closest('a') || e.target.closest('nav') || e.target.closest('header')) {
+        return;
+      }
+      nextSlide();
+    });
   }
 
-  function closeOverview() {
-    if (!overviewModal) return;
-    overviewModal.classList.remove('is-open');
-    overviewModal.setAttribute('aria-hidden', 'true');
-  }
-
-  // --- 7. EVENT LISTENERS ---
   // Keyboard Navigation
   window.addEventListener('keydown', (e) => {
-    // If overview is open, handle Esc
-    if (overviewModal && overviewModal.classList.contains('is-open')) {
-      if (e.key === 'Escape') {
-        closeOverview();
-      }
+    // Escape closes modals
+    if (e.key === 'Escape') {
+      closeOverviewModal();
+      closeHelpModal();
       return;
     }
 
-    switch (e.key) {
+    // If modal is open, don't trigger regular navigation
+    const isOverviewOpen = overviewModal && !overviewModal.classList.contains('pointer-events-none');
+    const isHelpOpen = helpModal && !helpModal.classList.contains('pointer-events-none');
+    if (isOverviewOpen || isHelpOpen) return;
+
+    switch(e.key) {
       case 'ArrowRight':
-      case 'ArrowDown':
-      case ' ': // Spacebar
+      case ' ':
       case 'PageDown':
         e.preventDefault();
         nextSlide();
         break;
-
       case 'ArrowLeft':
-      case 'ArrowUp':
       case 'PageUp':
         e.preventDefault();
         prevSlide();
         break;
-
-      case 'Home':
-        e.preventDefault();
-        goToSlide(0);
-        break;
-
-      case 'End':
-        e.preventDefault();
-        goToSlide(totalSlides - 1);
-        break;
-
       case 'f':
       case 'F':
         e.preventDefault();
         toggleFullscreen();
         break;
-
+      case 'm':
+      case 'M':
       case 'o':
       case 'O':
         e.preventDefault();
-        if (overviewModal && overviewModal.classList.contains('is-open')) {
-          closeOverview();
-        } else {
-          openOverview();
-        }
+        openOverviewModal();
         break;
-
-      case 'Escape':
-        if (overviewModal && overviewModal.classList.contains('is-open')) {
-          closeOverview();
-        }
+      case '?':
+      case '/':
+        e.preventDefault();
+        openHelpModal();
+        break;
+      case 'a':
+      case 'A':
+        e.preventDefault();
+        toggleAutoplay();
+        break;
+      case 'Home':
+        e.preventDefault();
+        goToSlide(1);
+        break;
+      case 'End':
+        e.preventDefault();
+        goToSlide(totalSlides);
         break;
     }
   });
 
-  // Touch Swipe for Mobile & Tablet
-  let touchStartX = 0;
-  let touchStartY = 0;
-  let touchEndX = 0;
-  let touchEndY = 0;
-
-  window.addEventListener(
-    'touchstart',
-    (e) => {
-      touchStartX = e.changedTouches[0].screenX;
-      touchStartY = e.changedTouches[0].screenY;
-    },
-    { passive: true }
-  );
-
-  window.addEventListener(
-    'touchend',
-    (e) => {
-      touchEndX = e.changedTouches[0].screenX;
-      touchEndY = e.changedTouches[0].screenY;
-      handleSwipe();
-    },
-    { passive: true }
-  );
-
-  function handleSwipe() {
-    const diffX = touchEndX - touchStartX;
-    const diffY = touchEndY - touchStartY;
-    const threshold = 55;
-
-    // Horizontal swipe dominant
-    if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > threshold) {
-      if (diffX < 0) {
-        nextSlide();
-      } else {
-        prevSlide();
-      }
-    }
-  }
-
-  // Mouse wheel throttling
-  let wheelTimeout = null;
-  window.addEventListener(
-    'wheel',
-    (e) => {
-      if (overviewModal && overviewModal.classList.contains('is-open')) return;
-      // Allow internal scrolling if content overflows
-      const activeSlide = slides[currentIndex];
-      if (activeSlide && activeSlide.scrollHeight > activeSlide.clientHeight) {
-        const atBottom = activeSlide.scrollHeight - activeSlide.scrollTop <= activeSlide.clientHeight + 2;
-        const atTop = activeSlide.scrollTop <= 2;
-        if ((e.deltaY > 0 && !atBottom) || (e.deltaY < 0 && !atTop)) {
-          return;
-        }
-      }
-
-      if (wheelTimeout) return;
-      if (Math.abs(e.deltaY) > 40) {
-        if (e.deltaY > 0) nextSlide();
-        else prevSlide();
-        wheelTimeout = setTimeout(() => {
-          wheelTimeout = null;
-        }, 650);
-      }
-    },
-    { passive: true }
-  );
-
-  // Auto idle cursor hide in presentation
-  let idleTimer = null;
-  function resetIdle() {
-    document.body.classList.remove('is-idle');
-    clearTimeout(idleTimer);
-    idleTimer = setTimeout(() => {
-      document.body.classList.add('is-idle');
-    }, 4500);
-  }
-  window.addEventListener('mousemove', resetIdle);
-  window.addEventListener('keydown', resetIdle);
-
-  // Button clicks
-  if (btnPrev) btnPrev.addEventListener('click', prevSlide);
-  if (btnNext) btnNext.addEventListener('click', nextSlide);
-  if (btnFullscreen) btnFullscreen.addEventListener('click', toggleFullscreen);
-  if (btnStart) btnStart.addEventListener('click', () => goToSlide(1));
-  if (btnRestart) btnRestart.addEventListener('click', () => goToSlide(0));
-  if (btnOverview) btnOverview.addEventListener('click', openOverview);
-  if (btnOpenOverview) btnOpenOverview.addEventListener('click', openOverview);
-  if (btnOverviewClose) btnOverviewClose.addEventListener('click', closeOverview);
+  // Event Listeners for UI Buttons
+  if (btnNext) btnNext.addEventListener('click', (e) => { e.stopPropagation(); nextSlide(); });
+  if (btnPrev) btnPrev.addEventListener('click', (e) => { e.stopPropagation(); prevSlide(); });
+  if (btnOverview) btnOverview.addEventListener('click', openOverviewModal);
+  if (btnCloseOverview) btnCloseOverview.addEventListener('click', closeOverviewModal);
   if (overviewModal) {
     overviewModal.addEventListener('click', (e) => {
-      if (e.target === overviewModal) closeOverview();
+      if (e.target === overviewModal) closeOverviewModal();
     });
   }
-
-  // URL Hash routing at load time (e.g. #/5)
-  function handleInitialHash() {
-    const hash = window.location.hash;
-    const match = hash.match(/#\/(\d+)/);
-    if (match) {
-      const idx = parseInt(match[1], 10) - 1;
-      if (idx >= 0 && idx < totalSlides) {
-        slides[0].classList.remove('is-active');
-        slides[idx].classList.add('is-active');
-        currentIndex = idx;
-      }
-    }
-  }
-
-  // Image load fallback helper
-  function setupImageFallbacks() {
-    const images = document.querySelectorAll('.media img');
-    images.forEach((img) => {
-      img.addEventListener('error', () => {
-        const parent = img.closest('.media');
-        if (parent) {
-          parent.classList.add('media--fallback');
-        }
-      });
+  if (btnHelp) btnHelp.addEventListener('click', openHelpModal);
+  if (btnCloseHelp) btnCloseHelp.addEventListener('click', closeHelpModal);
+  if (helpModal) {
+    helpModal.addEventListener('click', (e) => {
+      if (e.target === helpModal) closeHelpModal();
     });
   }
+  if (btnFullscreen) btnFullscreen.addEventListener('click', toggleFullscreen);
+  if (btnAutoplay) btnAutoplay.addEventListener('click', toggleAutoplay);
 
-  // --- 8. INITIALIZE ---
-  function init() {
-    buildNavigationUI();
-    handleInitialHash();
-    updateChrome(currentIndex);
-    initTerritoryWidget();
-    initSeaMapWidget();
-    initSpotlightEffect();
-    initParticles();
-    setupImageFallbacks();
-
-    // Trigger initial slide animations
-    setTimeout(() => {
-      animateSlideContent(slides[currentIndex], 1);
-    }, 150);
-  }
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
-  } else {
-    init();
-  }
-})();
+  // Initial Setup
+  createDots();
+  createOverviewGrid();
+  updateSlideView();
+});
